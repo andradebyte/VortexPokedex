@@ -39,9 +39,9 @@ export default function DashBoardScreen() {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    paddingHorizontal: 10, // mantém respiro lateral
+    paddingHorizontal: 10,
     paddingTop: 10,
-    alignItems: "center", // centraliza a grade
+    alignItems: "center",
     paddingBottom: 60,
   },
   grid: {
