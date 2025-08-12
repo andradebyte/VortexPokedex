@@ -1,7 +1,7 @@
 import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TouchableOpacity, View } from "react-native";
-import Title from "./Title";
+import Title from "../Title";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 

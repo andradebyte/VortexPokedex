@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { ScrollView, StyleSheet, Text, View, Pressable } from "react-native";
 import CommonHeader from "../components/CommonHeader";
 import DashboardCard from "../components/Home/DashboardCard";
+import { useNavigation } from "@react-navigation/native";
 
 const INITIAL_DATA = [
   { id: "1", title: "First Item" },
@@ -16,6 +17,7 @@ const INITIAL_DATA = [
 
 export default function DashBoardScreen() {
   const [cards, setCards] = useState(INITIAL_DATA);
+  const navigation = useNavigation();
 
   return (
     <ScrollView
@@ -27,7 +29,11 @@ export default function DashBoardScreen() {
       {/* Grade dinâmica de DashboardCard */}
       <View style={styles.grid}>
         {cards.map((item) => (
-          <DashboardCard key={item.id} text={item.title} />
+          <DashboardCard
+            key={item.id}
+            text={item.title}
+            onPress={() => navigation.navigate("InfoScreen")}
+          />
         ))}
       </View>
 
