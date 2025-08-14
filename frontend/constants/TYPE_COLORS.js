@@ -1,0 +1,22 @@
+// Tipos → cor de fundo
+export const TYPE_COLORS = {
+  Noturno: "#1F2A44",
+  "Defesa química": "#8E44AD",
+  Velocista: "#C47F00",
+  Terrícola: "#6D4C41",
+  Voador: "#1976D2",
+  Canoro: "#7B1FA2",
+  Corredor: "#B8860B",
+  Pastador: "#2E7D32",
+  "Caçador de emboscada": "#263238",
+  Ágil: "#00695C",
+  Ruminante: "#4E342E",
+  Tranquilo: "#455A64",
+  Montanhês: "#5D4037",
+  Exibicionista: "#AD1457",
+  Cortejo: "#8E24AA",
+  Camuflado: "#556B2F",
+  Soleador: "#D84315",
+  Herbívoro: "#388E3C",
+  Arborícola: "#1B5E20",
+};

@@ -25,7 +25,7 @@ const SmallCard = ({ text, onPress }) => {
 
 const styles = StyleSheet.create({
   card: {
-    height: 200,
+    height: 180,
     backgroundColor: "gray",
     borderRadius: 10,
     width: "48%",

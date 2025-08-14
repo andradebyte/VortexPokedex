@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import ProfileModal from "../components/Perfil/ProfileModal";
 import BigCard from "../components/Home/BigCard";
 import SmallCard from "../components/Home/SmallCard";
-import List from "../components/Lists/List"; // Importing the List component
+import List from "../components/Lists/List";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -28,7 +28,7 @@ export default function HomeScreen() {
       >
         <Header title={"Pókedex"} onPress={() => handleModalVisible()} />
         <View style={{ paddingHorizontal: 10, marginTop: 10 }}>
-          <BigCard />
+          <BigCard onPress={() => navigation.navigate("CameraScreen")} />
           <View style={{ marginBottom: 10 }} />
           <View
             style={{
@@ -50,8 +50,6 @@ export default function HomeScreen() {
           <List />
         </View>
       </ScrollView>
-
-      {/* Modal */}
       <ProfileModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}

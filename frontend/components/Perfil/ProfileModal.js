@@ -6,10 +6,10 @@ import {
   Pressable,
   View,
   TouchableWithoutFeedback,
-  TouchableOpacity,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ProfilePhoto from "../Perfil/ProfilePhoto";
+import OptionsButton from "./OptionsButton";
 
 const ProfileModal = ({ modalVisible, setModalVisible, topOffset = 0 }) => {
   const insets = useSafeAreaInsets();
@@ -27,8 +27,6 @@ const ProfileModal = ({ modalVisible, setModalVisible, topOffset = 0 }) => {
         <View style={styles.backdrop} />
       </TouchableWithoutFeedback>
 
-      {/* Começa a partir daqui! */}
-
       <View style={[styles.sheetContainer, { paddingTop: topSpace + 40 }]}>
         <View style={styles.sheet}>
           <Pressable
@@ -45,12 +43,19 @@ const ProfileModal = ({ modalVisible, setModalVisible, topOffset = 0 }) => {
             }}
           >
             <ProfilePhoto size={120} />
-            <Text style={styles.title}>Your name here</Text>
-            <TouchableOpacity style={{ position: "absolute", bottom: 20 }}>
-              <Text style={[styles.title, { color: "red" }]}>
-                Sair da conta
-              </Text>
-            </TouchableOpacity>
+            <View style={{ marginBottom: 30 }} />
+            <OptionsButton title={"Andradinho"} iconName="at" />
+            <OptionsButton
+              title={"Joaoigor@gmail.com".toLowerCase()}
+              iconName="mail"
+            />
+            <OptionsButton title={"******"} iconName={"lock-closed"} />
+            <OptionsButton
+              background="#D63D3D"
+              title="Sair da conta"
+              style={{ position: "absolute", bottom: 20 }}
+              logout={true}
+            />
           </View>
         </View>
       </View>
@@ -80,7 +85,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: -2 },
     elevation: 12,
   },
-  title: { fontSize: 18, fontWeight: "700", marginBottom: 18, marginTop: 20 },
+  title: { fontSize: 18, fontWeight: "700", marginBottom: 10 },
   button: {
     borderRadius: 12,
     alignSelf: "flex-start",
