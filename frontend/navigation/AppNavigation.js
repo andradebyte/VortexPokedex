@@ -15,7 +15,7 @@ export default function AppNavigation() {
         contentStyle: { backgroundColor: "white" },
       }}
     >
-      <Stack.Screen name="LandingPage" component={LandingPage} />
+      {/* <Stack.Screen name="LandingPage" component={LandingPage} /> */}
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="DashBoardScreen" component={DashBoardScreen} />
       <Stack.Screen name="InfoScreen" component={InfoScreen} />

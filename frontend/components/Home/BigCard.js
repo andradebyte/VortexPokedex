@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, Pressable, StyleSheet, Platform } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  Platform,
+  ImageBackground,
+} from "react-native";
 
 const BigCard = ({ onPress }) => {
   return (
@@ -12,13 +19,18 @@ const BigCard = ({ onPress }) => {
       style={({ pressed }) => [
         styles.card,
         pressed &&
-          Platform.OS !== "android" && {
-            opacity: 0.7,
-            transform: [{ scale: 0.98 }],
-          },
+        Platform.OS !== "android" && {
+          opacity: 0.7,
+          transform: [{ scale: 0.98 }],
+        },
       ]}
     >
-      <Text>Pokedex aqui</Text>
+      <ImageBackground
+        source={require("../../assets/imgs/bigcard4.png")}
+        style={styles.imageBackground}
+        imageStyle={{ borderRadius: 10 }}
+      >
+      </ImageBackground>
     </Pressable>
   );
 };
@@ -26,11 +38,19 @@ const BigCard = ({ onPress }) => {
 const styles = StyleSheet.create({
   card: {
     height: 180,
-    backgroundColor: "gray",
-    borderRadius: 10,
     width: "100%",
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+  imageBackground: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  text: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
 
