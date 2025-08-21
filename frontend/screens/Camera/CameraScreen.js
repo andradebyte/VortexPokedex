@@ -9,15 +9,18 @@ import {
 } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
+import { useNavigation } from "@react-navigation/native";
+import * as ImagePicker from "expo-image-picker";
 
-export default function CameraScreen({ onClose, onPhoto }) {
+export default function CameraScreen() {
   const camRef = useRef(null);
   const [permission, requestPermission] = useCameraPermissions();
   const [mlStatus, requestML] = MediaLibrary.usePermissions();
   const [facing, setFacing] = useState("back");
   const [flash, setFlash] = useState("off");
   const [loading, setLoading] = useState(false);
-  const [preview, setPreview] = useState(null);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     if (!mlStatus?.granted) requestML();
@@ -42,108 +45,114 @@ export default function CameraScreen({ onClose, onPhoto }) {
     );
   }
 
+  const pickFromGallery = async () => {
+    try {
+      setLoading(true);
+
+      // Pede permissão da galeria (ImagePicker cuida das diferenças iOS/Android)
+      const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!perm.granted) {
+        console.warn("Permissão da galeria negada.");
+        return;
+      }
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images, // só imagens
+        allowsEditing: true, // permite recorte nativo (opcional)
+        quality: 0.9,
+        // allowsMultipleSelection: false, // (padrão)
+        // selectionLimit: 1, // se quiser explicitar limite
+      });
+
+      if (!result.canceled && result.assets && result.assets[0]?.uri) {
+        const uri = result.assets[0].uri;
+        navigation.navigate("ImageSendingScreen", { imageUri: uri });
+      }
+    } catch (e) {
+      console.warn("Erro ao abrir galeria:", e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const takePhoto = async () => {
     try {
       setLoading(true);
-      const photo = await camRef.current?.takePictureAsync({
-        quality: 0.85,
-        skipProcessing: true,
-      });
-      setPreview(photo);
+
+      // Algumas versões usam takePhotoAsync, outras takePictureAsync
+      const photo =
+        (await camRef.current?.takePhotoAsync?.({
+          quality: 0.85,
+          skipProcessing: true,
+        })) ||
+        (await camRef.current?.takePictureAsync?.({
+          quality: 0.85,
+          skipProcessing: true,
+        }));
+
+      if (photo?.uri) {
+        navigation.navigate("ImageSendingScreen", { imageUri: photo.uri });
+      } else {
+        console.warn("Não foi possível obter a URI da foto.");
+      }
+    } catch (e) {
+      console.warn("Erro ao tirar foto:", e);
     } finally {
       setLoading(false);
     }
   };
-
-  const savePhoto = async () => {
-    if (!preview) return;
-    try {
-      setLoading(true);
-      if (!mlStatus?.granted) await requestML();
-      await MediaLibrary.saveToLibraryAsync(preview.uri);
-      onPhoto?.(preview);
-      setPreview(null);
-      onClose?.();
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const retake = () => setPreview(null);
 
   return (
-    <View style={styles.container}>
-      {!preview ? (
-        <>
-          <CameraView
-            ref={camRef}
-            style={StyleSheet.absoluteFill}
-            facing={facing}
-            enableTorch={flash === "torch"}
+    <View
+      style={[styles.container, { paddingTop: 0, justifyContent: "center" }]}
+    >
+      <View style={styles.header}>
+        <Image
+          source={require("../../assets/images/header3.png")}
+          style={styles.headerImg}
+        />
+      </View>
+
+      <CameraView
+        ref={camRef}
+        style={[StyleSheet.absoluteFill, { top: 0 }]}
+        facing={facing}
+        enableTorch={flash === "torch"}
+      />
+
+      <View style={[styles.bottomBar, { paddingHorizontal: 24 }]}>
+        <TouchableOpacity
+          style={styles.roundBtn}
+          onPress={() => setFacing((f) => (f === "back" ? "front" : "back"))}
+        >
+          <Text style={styles.btnText}>↺</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.capture}
+          onPress={takePhoto}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator />
+          ) : (
+            <View style={styles.captureInner} />
+          )}
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.flashBtn} onPress={pickFromGallery}>
+          <Image
+            source={require("../../assets/images/gallery.png")}
+            style={styles.flashImg}
           />
-
-          {/* Top bar */}
-          <View style={styles.topBar}>
-            <TouchableOpacity style={styles.topBtn} onPress={onClose}>
-              <Text style={styles.topTxt}>Fechar</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.topBtn}
-              onPress={() => setFlash((f) => (f === "off" ? "torch" : "off"))}
-            >
-              <Text style={styles.topTxt}>
-                {flash === "off" ? "Flash: Off" : "Flash: On"}
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.bottomBar}>
-            <TouchableOpacity
-              style={styles.roundBtn}
-              onPress={() =>
-                setFacing((f) => (f === "back" ? "front" : "back"))
-              }
-            >
-              <Text style={styles.btnText}>↺</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.capture}
-              onPress={takePhoto}
-              disabled={loading}
-            >
-              {loading ? (
-                <ActivityIndicator />
-              ) : (
-                <View style={styles.captureInner} />
-              )}
-            </TouchableOpacity>
-
-            <View style={styles.roundBtnPlaceholder} />
-          </View>
-        </>
-      ) : (
-        // Preview
-        <View style={styles.previewWrap}>
-          <Image source={{ uri: preview.uri }} style={styles.preview} />
-          <View style={styles.previewActions}>
-            <TouchableOpacity style={styles.secondaryBtn} onPress={retake}>
-              <Text style={styles.btnText}>Refazer</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.primaryBtn}
-              onPress={savePhoto}
-              disabled={loading}
-            >
-              {loading ? (
-                <ActivityIndicator color="#fff" />
-              ) : (
-                <Text style={styles.btnText}>Salvar</Text>
-              )}
-            </TouchableOpacity>
-          </View>
-        </View>
-      )}
+        </TouchableOpacity>
+      </View>
+      <View style={styles.bottom}>
+        <Image
+          source={require("../../assets/images/bottom2.png")}
+          style={styles.bottomImg}
+        />
+      </View>
     </View>
   );
 }
@@ -158,22 +167,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 24,
   },
-  topBar: {
+  header: {
     position: "absolute",
-    top: 40,
-    left: 16,
-    right: 16,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    top: 0,
+    left: 0,
+    right: 0,
+    width: "100%",
+    height: 150,
+    zIndex: 1000,
+    alignItems: "center",
+    justifyContent: "center",
   },
-  topBtn: { padding: 10, backgroundColor: "rgba(0,0,0,0.4)", borderRadius: 8 },
-  topTxt: { color: "#fff", fontWeight: "600" },
-
+  headerImg: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "stretch",
+    alignSelf: "center",
+  },
   bottomBar: {
+    zIndex: 2000,
     position: "absolute",
     bottom: 40,
-    left: 24,
-    right: 24,
+    width: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -186,8 +201,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  roundBtnPlaceholder: { width: BTN, height: BTN },
-
   capture: {
     height: BTN + 12,
     width: BTN + 12,
@@ -197,36 +210,41 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   captureInner: {
-    height: BTN - 10,
-    width: BTN - 10,
-    borderRadius: (BTN - 10) / 2,
-    backgroundColor: "#ff3b30",
+    height: BTN - 3,
+    width: BTN - 3,
+    borderRadius: (BTN - 3) / 2,
+    backgroundColor: "black",
   },
-
-  previewWrap: { flex: 1, backgroundColor: "#000" },
-  preview: { flex: 1, resizeMode: "contain" },
-  previewActions: {
+  flashBtn: {
+    width: BTN,
+    height: BTN,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  flashImg: { width: 48, height: 50, resizeMode: "stretch" },
+  bottom: {
     position: "absolute",
-    bottom: 30,
-    left: 24,
-    right: 24,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    bottom: -10,
+    left: 0,
+    right: 0,
+    width: "100%",
+    height: 150,
+    zIndex: 1000,
+    alignItems: "center",
+    justifyContent: "center",
   },
-
+  bottomImg: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "stretch",
+    alignSelf: "center",
+  },
   primaryBtn: {
     backgroundColor: "#1976d2",
     paddingVertical: 14,
     paddingHorizontal: 18,
     borderRadius: 12,
-  },
-  secondaryBtn: {
-    backgroundColor: "rgba(255,255,255,0.2)",
-    paddingVertical: 14,
-    paddingHorizontal: 18,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.4)",
   },
   btnText: { color: "#fff", fontWeight: "700" },
 });

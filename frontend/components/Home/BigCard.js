@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Pressable, StyleSheet, Platform } from "react-native";
+import { View, Image, Pressable, StyleSheet, Platform } from "react-native";
 
 const BigCard = ({ onPress }) => {
   return (
@@ -18,14 +18,18 @@ const BigCard = ({ onPress }) => {
           },
       ]}
     >
-      <Text>Pokedex aqui</Text>
+      <Image
+        source={require("../../assets/pokedexcard.png")}
+        style={{ width: "100%", height: "100%", borderRadius: 10 }}
+        resizeMode="cover"
+      />
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    height: 180,
+    height: 200,
     backgroundColor: "gray",
     borderRadius: 10,
     width: "100%",
