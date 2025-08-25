@@ -30,8 +30,6 @@ const BigCard = ({ onPress }) => {
 const styles = StyleSheet.create({
   card: {
     height: 200,
-    backgroundColor: "gray",
-    borderRadius: 10,
     width: "100%",
     borderRadius: 10,
     overflow: "hidden",
