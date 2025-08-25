@@ -53,16 +53,6 @@ export const createAnimal = async (req, res) => {
   }
 };
 
-export const getAllAnimals = async (_req, res) => {
-  try {
-    const animals = await Animal.find().sort({ createdAt: -1 });
-    res.json(animals);
-  } catch (error) {
-    console.error("getAllAnimals error:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-};
-
 export const getAnimalById = async (req, res) => {
   try {
     const animal = await Animal.findOne({ animal_id: req.params.id });

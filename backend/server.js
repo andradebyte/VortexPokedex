@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
 import animalRoutes from "./routes/animalRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import usersAnimalRoutes from "./routes/usersAnimalRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/animals", animalRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/usersanimals", usersAnimalRoutes);
 
 app.use((req, res) => {
   res.status(404).json({
