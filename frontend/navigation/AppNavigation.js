@@ -3,7 +3,7 @@ import DashBoardScreen from "../screens/Dashboard";
 import HomeScreen from "../screens/Homescreen";
 import InfoScreen from "../screens/Dashboard/Info";
 import CameraScreen from "../screens/Camera/CameraScreen";
-import LandingPage from "../screens/Auth/LandingPage";
+import ImageSendingScreen from "../screens/Camera/ImageSendingScreen"; // Assuming this screen exists
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigation() {
@@ -20,6 +20,7 @@ export default function AppNavigation() {
       <Stack.Screen name="DashBoardScreen" component={DashBoardScreen} />
       <Stack.Screen name="InfoScreen" component={InfoScreen} />
       <Stack.Screen name="CameraScreen" component={CameraScreen} />
+      <Stack.Screen name="ImageSendingScreen" component={ImageSendingScreen} />
     </Stack.Navigator>
   );
 }

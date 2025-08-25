@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
-  Platform,
-  ImageBackground,
-} from "react-native";
+import { View, Image, Pressable, StyleSheet, Platform } from "react-native";
 
 const BigCard = ({ onPress }) => {
   return (
@@ -25,12 +18,11 @@ const BigCard = ({ onPress }) => {
         },
       ]}
     >
-      <ImageBackground
-        source={require("../../assets/imgs/bigcard4.png")}
-        style={styles.imageBackground}
-        imageStyle={{ borderRadius: 10 }}
-      >
-      </ImageBackground>
+      <Image
+        source={require("../../assets/pokedexcard.png")}
+        style={{ width: "100%", height: "100%", borderRadius: 10 }}
+        resizeMode="cover"
+      />
     </Pressable>
   );
 };
