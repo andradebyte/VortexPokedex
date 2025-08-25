@@ -12,10 +12,10 @@ const BigCard = ({ onPress }) => {
       style={({ pressed }) => [
         styles.card,
         pressed &&
-          Platform.OS !== "android" && {
-            opacity: 0.7,
-            transform: [{ scale: 0.98 }],
-          },
+        Platform.OS !== "android" && {
+          opacity: 0.7,
+          transform: [{ scale: 0.98 }],
+        },
       ]}
     >
       <Image
@@ -33,8 +33,18 @@ const styles = StyleSheet.create({
     backgroundColor: "gray",
     borderRadius: 10,
     width: "100%",
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+  imageBackground: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  text: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
 
