@@ -41,6 +41,7 @@ export default function HomeScreen() {
           >
             <SmallCard
               text="Camera"
+              imageSource={require("../assets/images/camerapreta.png")}
               onPress={() => {
                 navigation.navigate("CameraScreen");
               }}
