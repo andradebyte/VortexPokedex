@@ -12,7 +12,7 @@ export default function AppNavigation() {
       screenOptions={{
         headerShown: false,
         animation: "slide_from_right",
-        contentStyle: { backgroundColor: "white" },
+        contentStyle: { backgroundColor: "#eaeaea" },
       }}
     >
       {/* <Stack.Screen name="LandingPage" component={LandingPage} /> */}

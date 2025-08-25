@@ -1,7 +1,14 @@
 import React from "react";
-import { View, Text, Pressable, Platform, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  Platform,
+  StyleSheet,
+  Image,
+} from "react-native";
 
-const SmallCard = ({ text, onPress }) => {
+const SmallCard = ({ text, onPress, image }) => {
   return (
     <Pressable
       onPress={onPress || (() => console.log("SmallCard pressionado!"))}
@@ -18,7 +25,9 @@ const SmallCard = ({ text, onPress }) => {
           },
       ]}
     >
-      <Text>{text || "Olá"}</Text>
+      {image && (
+        <Image source={image} style={styles.image} resizeMode="cover" />
+      )}
     </Pressable>
   );
 };
@@ -31,6 +40,18 @@ const styles = StyleSheet.create({
     width: "48%",
     justifyContent: "center",
     alignItems: "center",
+    overflow: "hidden",
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "gray",
+  },
+  text: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 18,
+    zIndex: 1,
   },
 });
 

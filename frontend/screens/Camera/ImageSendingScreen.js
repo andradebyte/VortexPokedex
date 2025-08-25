@@ -1,21 +1,26 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
+import CommonHeader from "../../components/CommonHeader";
+import { useRoute } from "@react-navigation/native";
+import ButtonImgSend from "../../components/ImageSending/ButtonImgSend";
 
 const ImageSendingScreen = ({ route }) => {
   const { imageUri } = route.params || {};
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Image Sending Screen</Text>
+      <CommonHeader title={"Image Sending"} />
       <View
         style={{
-          width: 200,
-          height: 200,
+          width: 300,
+          height: 300,
           borderWidth: 1,
           borderColor: "#ccc",
           justifyContent: "center",
           alignItems: "center",
+          borderRadius: 20,
           marginBottom: 16,
+          overflow: "hidden",
         }}
       >
         {imageUri ? (
@@ -29,6 +34,12 @@ const ImageSendingScreen = ({ route }) => {
         )}
       </View>
       <Text>This is a simple React Native page.</Text>
+      <View style={{ position: "absolute", bottom: "20%" }}>
+        <ButtonImgSend
+          title="Send Image"
+          onPress={() => alert("Image Sent!")}
+        />
+      </View>
     </View>
   );
 };
@@ -36,9 +47,11 @@ const ImageSendingScreen = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "flex-start",
+    width: "100%",
+    justifyContent: "flex-start",
+    alignItems: "center",
     backgroundColor: "#fff",
+    paddingHorizontal: 24,
   },
   title: {
     fontSize: 24,

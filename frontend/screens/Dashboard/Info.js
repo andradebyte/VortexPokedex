@@ -1,12 +1,17 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet, Text, View, Image } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import TypeCard from "../../components/Info/TypeCard";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import Animal from "../../objdata/Animal";
+import Title from "../../components/Title";
 
 export default function InfoScreen() {
   const navigation = useNavigation();
+
+  const route = useRoute();
+  const { item } = route.params;
 
   return (
     <View style={styles.container}>
@@ -15,34 +20,43 @@ export default function InfoScreen() {
           <Ionicons name="chevron-back" size={24} color="white" />
         </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => console.log("Falando...")}
-          style={styles.audioButton}
-        >
-          <AntDesign name="sound" size={24} color="white" />
-        </TouchableOpacity>
-
-        <Image
-          source={{
-            uri: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
-          }}
-          style={styles.image}
-        />
+        <Image source={item.imageSource} style={styles.image} />
       </View>
 
       {/* Parte branca para as informações */}
-      <View style={{ paddingTop: 40 }} />
+      <View style={{ paddingTop: 60 }} />
       <View style={styles.infoSection}>
-        <Text style={styles.name}>Charizard</Text>
-
-        <View style={{ flexDirection: "row", marginVertical: 10 }}>
-          <TypeCard simbolo={"🔥"} text="Fogo" myColor="#FFA94D" />
-          <TypeCard simbolo={"🕊️"} text="Voador" myColor="#89AAE3" />
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 10,
+            width: "100%",
+          }}
+        >
+          <Text style={styles.name}>{item.name || "???"}</Text>
+          <TouchableOpacity
+            onPress={() => console.log("Falando...")}
+            style={styles.audioButton}
+          >
+            <AntDesign name="sound" size={24} color="black" />
+          </TouchableOpacity>
         </View>
 
-        <Text style={styles.desc}>
-          Ele cospe fogo quente o suficiente para derreter pedras...
-        </Text>
+        <View style={{ flexDirection: "row", marginVertical: 10 }}>
+          {item.tipo.map((type, index) => (
+            <TypeCard
+              key={index}
+              simbolo={item.tipo[index].simbolo}
+              text={item.tipo[index].text}
+              myColor={item.tipo[index].bg}
+            />
+          ))}
+        </View>
+        <Title title={"Descrição"} style={styles.mytitle} />
+        <Text style={styles.desc}>{item.namedesc || "??"}</Text>
+        <Title title={"Habitat"} style={styles.mytitle} />
+        <Text style={styles.desc}>{item.namehabitat || "??"}</Text>
       </View>
     </View>
   );
@@ -53,13 +67,13 @@ const IMAGE_OVERFLOW = 60; // quanto a imagem “sai” do fundo
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#eaeaea",
   },
 
   headerBackground: {
     width: "100%",
-    backgroundColor: "#FFA94D",
-    height: 250,
+    backgroundColor: "gray",
+    height: 220,
     borderBottomLeftRadius: 200,
     borderBottomRightRadius: 200,
     alignItems: "center",
@@ -75,23 +89,20 @@ const styles = StyleSheet.create({
   },
 
   audioButton: {
-    position: "absolute",
-    top: 40,
-    right: 20,
     zIndex: 3,
   },
 
   image: {
     position: "absolute",
     bottom: -IMAGE_OVERFLOW,
-    width: 250,
-    height: 250,
+    width: 150,
+    height: 200,
     resizeMode: "contain",
     zIndex: 2,
   },
 
   infoSection: {
-    backgroundColor: "#fff",
+    backgroundColor: "#eaeaea",
     flex: 1,
     marginTop: -IMAGE_OVERFLOW,
     paddingTop: IMAGE_OVERFLOW + 20,
@@ -110,5 +121,9 @@ const styles = StyleSheet.create({
   desc: {
     fontSize: 18,
     color: "#444",
+    marginBottom: 20,
+  },
+  mytitle: {
+    fontSize: 20,
   },
 });

@@ -44,8 +44,12 @@ export default function HomeScreen() {
               onPress={() => {
                 navigation.navigate("CameraScreen");
               }}
+              image={require("../assets/images/camera.png")}
             />
-            <SmallCard text="Estatísticas" />
+            <SmallCard
+              text="Estatísticas IA"
+              image={require("../assets/images/estatisticas.png")}
+            />
           </View>
           <List />
         </View>
