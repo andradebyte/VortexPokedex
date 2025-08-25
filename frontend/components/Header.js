@@ -11,7 +11,7 @@ const Header = ({ title, onPress }) => {
     <>
       <View
         style={{
-          backgroundColor: "white",
+          // backgroundColor: "white",
           height: 70 + insets.top,
           flexDirection: "row",
           justifyContent: "space-between",
@@ -26,10 +26,11 @@ const Header = ({ title, onPress }) => {
       </View>
       <View
         style={{
-          height: 1,
+          height: 0.5,
           backgroundColor: "black",
+          elevation: 2,
           width: "100%",
-          opacity: 0.5,
+          opacity: 0.3,
         }}
       />
     </>

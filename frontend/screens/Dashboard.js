@@ -6,13 +6,86 @@ import DashboardCard from "../components/Home/DashboardCard";
 import { useNavigation } from "@react-navigation/native";
 
 const INITIAL_DATA = [
-  { id: "1", title: "First Item" },
-  { id: "2", title: "Second Item" },
-  { id: "3", title: "Third Item" },
-  { id: "4", title: "Fourth Item" },
-  { id: "5", title: "Fifth Item" },
-  { id: "6", title: "Sixth Item" },
-  { id: "7", title: "Sixth Item" },
+  {
+    id: 0,
+    name: "???",
+    imageSource: require("../assets/images/animals/cat.png"),
+    descricao: "???",
+    habitat: "???",
+    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
+  },
+  {
+    id: 1,
+    name: "???",
+    imageSource: require("../assets/images/animals/cow.png"),
+    descricao: "???",
+    habitat: "???",
+    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
+  },
+  {
+    id: 2,
+    name: "???",
+    imageSource: require("../assets/images/animals/goat.png"),
+    descricao: "???",
+    habitat: "???",
+    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
+  },
+  {
+    id: 3,
+    name: "???",
+    imageSource: require("../assets/images/animals/horse.png"),
+    descricao: "???",
+    habitat: "???",
+    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
+  },
+  {
+    id: 4,
+    name: "???",
+    imageSource: require("../assets/images/animals/iguana.png"),
+    descricao: "???",
+    habitat: "???",
+    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
+  },
+  {
+    id: 5,
+    name: "???",
+    imageSource: require("../assets/images/animals/lizard.png"),
+    descricao: "???",
+    habitat: "???",
+    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
+  },
+  {
+    id: 6,
+    name: "???",
+    imageSource: require("../assets/images/animals/ostrich.png"),
+    descricao: "???",
+    habitat: "???",
+    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
+  },
+  {
+    id: 7,
+    name: "???",
+    imageSource: require("../assets/images/animals/peacock.png"),
+    descricao: "???",
+    habitat: "???",
+    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
+  },
+  {
+    id: 8,
+    name: "???",
+    imageSource: require("../assets/images/animals/pigeon.png"),
+    descricao: "???",
+    habitat: "???",
+    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
+  },
+  {
+    id: 9,
+    name: "???",
+    imageSource: require("../assets/images/animals/possum.png"),
+    descricao: "???",
+    habitat: "???",
+    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
+  },
 ];
 
 export default function DashBoardScreen() {
@@ -26,13 +99,13 @@ export default function DashBoardScreen() {
     >
       <CommonHeader title={"Dashboard"} />
 
-      {/* Grade dinâmica de DashboardCard */}
       <View style={styles.grid}>
         {cards.map((item) => (
           <DashboardCard
             key={item.id}
-            text={item.title}
-            onPress={() => navigation.navigate("InfoScreen")}
+            text={item.name || "???"}
+            imageSource={item.imageSource}
+            onPress={() => navigation.navigate("InfoScreen", { item })}
           />
         ))}
       </View>
