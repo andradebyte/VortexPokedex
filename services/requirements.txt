@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+torch
+torchvision
+pandas
+numpy
+scikit-learn
+pillow
