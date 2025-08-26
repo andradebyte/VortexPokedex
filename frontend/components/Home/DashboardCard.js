@@ -1,7 +1,14 @@
 import React from "react";
-import { View, Text, Pressable, Platform, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  Platform,
+  StyleSheet,
+  Image,
+} from "react-native";
 
-const DashboardCard = ({ text, onPress, myColor }) => {
+const DashboardCard = ({ text, onPress, myColor, imageSource, subText }) => {
   return (
     <Pressable
       onPress={onPress || (() => console.log("DashboardCard pressionado!"))}
@@ -19,7 +26,11 @@ const DashboardCard = ({ text, onPress, myColor }) => {
           },
       ]}
     >
-      <Text>{text || "Olá"}</Text>
+      {imageSource && (
+        <Image source={imageSource} style={styles.image} resizeMode="contain" />
+      )}
+      <Text style={styles.text}>{text || "???"}</Text>
+      {subText && <Text style={styles.subText}>{subText}</Text>}
     </Pressable>
   );
 };
@@ -27,11 +38,29 @@ const DashboardCard = ({ text, onPress, myColor }) => {
 const styles = StyleSheet.create({
   card: {
     height: 180,
-    backgroundColor: "gray",
+    elevation: 0.5,
     borderRadius: 10,
     width: 180,
     justifyContent: "center",
     alignItems: "center",
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    backgroundColor: "#fff",
+  },
+  image: {
+    width: 110,
+    height: 110,
+    marginBottom: 8,
+  },
+  text: {
+    fontWeight: "bold",
+    fontSize: 18,
+    marginBottom: 4,
+  },
+  subText: {
+    fontSize: 14,
+    color: "#555",
   },
 });
 

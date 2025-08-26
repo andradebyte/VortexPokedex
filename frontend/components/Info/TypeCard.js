@@ -6,7 +6,9 @@ const TypeCard = ({ text, myColor = "gray", simbolo }) => {
     <View
       style={[styles.card, { backgroundColor: myColor, borderRadius: 1000 }]}
     >
-      <Text style={styles.simbolo}>{simbolo}</Text>
+      <Text style={[styles.simbolo, simbolo ? "" : { marginRight: -5 }]}>
+        {simbolo}
+      </Text>
       <Text style={styles.textStyle}>{text}</Text>
     </View>
   );

@@ -28,7 +28,7 @@ export default function HomeScreen() {
       >
         <Header title={"Pókedex"} onPress={() => handleModalVisible()} />
         <View style={{ paddingHorizontal: 10, marginTop: 10 }}>
-          <BigCard onPress={() => navigation.navigate("CameraScreen")} />
+          <BigCard onPress={() => navigation.navigate("DashBoardScreen")} />
           <View style={{ marginBottom: 10 }} />
           <View
             style={{
@@ -40,12 +40,16 @@ export default function HomeScreen() {
             }}
           >
             <SmallCard
-              text="DashBoard"
+              text="Camera"
               onPress={() => {
-                navigation.navigate("DashBoardScreen");
+                navigation.navigate("CameraScreen");
               }}
+              image={require("../assets/images/camera.png")}
             />
-            <SmallCard text="Estatísticas" />
+            <SmallCard
+              text="Estatísticas IA"
+              image={require("../assets/images/estatisticas.png")}
+            />
           </View>
           <List />
         </View>
