@@ -4,17 +4,20 @@ import Animal from "../models/AnimalsModel.js";
 export const createUserAnimal = async (req, res) => {
   try {
     const { user, animalid } = req.body;
+
     const animal = await Animal.findOne({ animal_id: animalid });
     if (!animal) {
       return res.status(404).json({ message: "Animal não encontrado" });
     }
-    // const exists = await UsersAnimalModal.findOne({ user, animal: animal._id });
-    // if (exists) {
-    //   return res.status(409).json({ message: "Relação já existe" });
-    // }
-    // const userAnimal = new UsersAnimalModal({ user, animal: animal._id });
-    // await userAnimal.save();
-    // await userAnimal.populate("animal");
+
+    const exists = await UsersAnimalModal.findOne({ user, animal: animal._id });
+    if (exists) {
+      return res.status(409).json({ message: "Relação já existe" });
+    }
+    const userAnimal = new UsersAnimalModal({ user, animal: animal._id });
+    await userAnimal.save();
+    await userAnimal.populate("animal");
+
     console.log(animal);
     res.status(201).json(animal);
   } catch (error) {
