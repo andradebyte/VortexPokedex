@@ -34,6 +34,7 @@ export async function signup(req, res) {
       token,
     });
   } catch (err) {
+    console.error(err);
     if (err?.code === 11000) {
       return res.status(409).json({ error: "Email já cadastrado" });
     }
