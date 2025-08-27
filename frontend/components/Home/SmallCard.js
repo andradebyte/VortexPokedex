@@ -8,7 +8,14 @@ import {
   Image,
 } from "react-native";
 
-const SmallCard = ({ text, onPress, image, size = 90, long = false }) => {
+const SmallCard = ({
+  text,
+  onPress,
+  image,
+  size = 90,
+  long = false,
+  textStyle,
+}) => {
   return (
     <Pressable
       onPress={onPress || (() => console.log("SmallCard pressionado!"))}
@@ -23,13 +30,14 @@ const SmallCard = ({ text, onPress, image, size = 90, long = false }) => {
             opacity: 0.7,
             transform: [{ scale: 0.98 }],
           },
-        { width: size, height: size },
+        { width: size, height: size + 5 },
         long && { width: size * 2 },
       ]}
     >
-      {/* {image && (
+      {image && (
         <Image source={image} style={styles.image} resizeMode="cover" />
-      )} */}
+      )}
+      <Text style={[styles.text, textStyle]}>{text}</Text>
     </Pressable>
   );
 };
@@ -37,7 +45,7 @@ const SmallCard = ({ text, onPress, image, size = 90, long = false }) => {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: "gray",
-    borderRadius: 25,
+    borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden",
@@ -48,9 +56,11 @@ const styles = StyleSheet.create({
     backgroundColor: "gray",
   },
   text: {
+    position: "absolute",
+    bottom: 10,
     color: "#fff",
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 16,
     zIndex: 1,
   },
 });

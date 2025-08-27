@@ -28,8 +28,8 @@ export default function HomeScreen() {
       >
         <Header title={"Pókedex"} onPress={() => handleModalVisible()} />
         <View style={{ paddingHorizontal: 10, marginTop: 10 }}>
-          <BigCard onPress={() => navigation.navigate("DashBoardScreen")} />
-          <View style={{ marginBottom: 10 }} />
+          <BigCard onPress={() => navigation.navigate("PokedexScreen")} />
+          <View style={{ marginBottom: 20 }} />
           <View
             style={{
               flexDirection: "row",
@@ -41,19 +41,24 @@ export default function HomeScreen() {
           >
             <SmallCard
               long={true}
-              text="Estatísticas IA"
-              image={require("../assets/images/estatisticas.png")}
+              text="Descubra mais"
+              image={require("../assets/images/cards/websitecard.png")}
+              textStyle={{
+                width: "100%",
+                textAlign: "right",
+                paddingRight: 20,
+              }}
             />
             <SmallCard
-              text="Camera"
+              text="IA"
+              image={require("../assets/images/cards/aicard.png")}
+            />
+            <SmallCard
+              text="Câmera"
               onPress={() => {
                 navigation.navigate("CameraScreen");
               }}
-              image={require("../assets/images/camera.png")}
-            />
-            <SmallCard
-              text="Estatísticas IA"
-              image={require("../assets/images/estatisticas.png")}
+              image={require("../assets/images/cards/cameracard.png")}
             />
           </View>
           <List />

@@ -51,9 +51,10 @@ const ProfileModal = ({ modalVisible, setModalVisible, topOffset = 0 }) => {
             />
             <OptionsButton title={"******"} iconName={"lock-closed"} />
             <OptionsButton
+              iconName={"catching-pokemon"}
               background="#D63D3D"
               title="Sair da conta"
-              style={{ position: "absolute", bottom: 20 }}
+              style={{ position: "absolute", bottom: 20, width: 200 }}
               logout={true}
             />
           </View>
@@ -63,7 +64,7 @@ const ProfileModal = ({ modalVisible, setModalVisible, topOffset = 0 }) => {
   );
 };
 
-const RADIUS = 20;
+const RADIUS = 40;
 
 const styles = StyleSheet.create({
   backdrop: {

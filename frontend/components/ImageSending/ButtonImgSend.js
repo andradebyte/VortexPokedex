@@ -1,25 +1,58 @@
 import React from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { MaterialIcons } from "@expo/vector-icons";
 
-const ButtonImgSend = ({ onPress, title = "Send Image" }) => (
-  <TouchableOpacity style={styles.button} onPress={onPress}>
+const ButtonImgSend = ({
+  onPress,
+  title = "Oi",
+  background = "#1976d2",
+  style,
+  iconName,
+  iconColor = "#fff",
+  iconSize = 22,
+}) => (
+  <TouchableOpacity
+    style={[
+      styles.button,
+      { backgroundColor: background, justifyContent: "center" },
+      style,
+    ]}
+    onPress={onPress}
+    activeOpacity={0.8}
+    accessibilityRole="button"
+    accessibilityLabel={title}
+    hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
+  >
+    <MaterialIcons
+      name={iconName}
+      size={iconSize}
+      color={iconColor}
+      style={styles.leftIcon}
+    />
+
     <Text style={styles.text}>{title}</Text>
   </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#953040",
-    padding: 18,
-    minWidth: 150,
-    borderRadius: 100,
+    flexDirection: "row",
     alignItems: "center",
+    marginVertical: 6,
+    width: "100%",
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    borderRadius: 1000,
+  },
+  leftIcon: {
+    marginRight: 12,
   },
   text: {
-    color: "#fff",
     fontSize: 16,
+    color: "#fff",
     fontWeight: "bold",
+    flexShrink: 1,
   },
 });
-
 export default ButtonImgSend;

@@ -5,13 +5,14 @@ import Title from "./Title";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 
-const CommonHeader = ({ title }) => {
+const CommonHeader = ({ title, iconColor, textStyle }) => {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   return (
     <>
       <View
         style={{
+          zIndex: 2000,
           height: 70 + insets.top,
           flexDirection: "row",
           justifyContent: "flex-start",
@@ -24,11 +25,11 @@ const CommonHeader = ({ title }) => {
           <Ionicons
             name="chevron-back"
             size={24}
-            color="black"
+            color={iconColor || "black"}
             style={{ marginRight: 18 }}
           />
         </TouchableOpacity>
-        <Title title={title} />
+        <Title title={title} style={textStyle} />
       </View>
     </>
   );

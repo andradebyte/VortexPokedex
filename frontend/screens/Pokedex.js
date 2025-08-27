@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { ScrollView, StyleSheet, Text, View, Pressable } from "react-native";
+import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
 import CommonHeader from "../components/CommonHeader";
-import DashboardCard from "../components/Home/DashboardCard";
+import PokedexCard from "../components/Home/PokedexCard";
 import { useNavigation } from "@react-navigation/native";
 
 const INITIAL_DATA = [
@@ -88,7 +88,7 @@ const INITIAL_DATA = [
   },
 ];
 
-export default function DashBoardScreen() {
+export default function PokedexScreen() {
   const [cards, setCards] = useState(INITIAL_DATA);
   const navigation = useNavigation();
 
@@ -96,12 +96,35 @@ export default function DashBoardScreen() {
     <ScrollView
       style={{ alignSelf: "stretch" }}
       contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
     >
-      <CommonHeader title={"Dashboard"} />
+      <Image
+        source={require("../assets/images/icons/pokeball.png")}
+        style={styles.pokeballBackground}
+      />
+
+      <View
+        style={{
+          borderBottomLeftRadius: 40,
+          height: "20%",
+          width: "200%",
+          position: "absolute",
+          backgroundColor: "#C52540",
+          top: 0,
+          left: 0,
+          right: 0,
+        }}
+      />
+
+      <CommonHeader
+        title={"Pokédex"}
+        textStyle={{ color: "white" }}
+        iconColor={"white"}
+      />
 
       <View style={styles.grid}>
         {cards.map((item) => (
-          <DashboardCard
+          <PokedexCard
             key={item.id}
             text={item.name || "???"}
             imageSource={item.imageSource}
@@ -130,5 +153,15 @@ const styles = StyleSheet.create({
     gap: 10,
     alignItems: "center",
     marginBottom: 10,
+  },
+  pokeballBackground: {
+    position: "absolute",
+    top: -100,
+    left: "70%",
+    transform: [{ translateX: -100 }, { rotate: "30deg" }],
+    width: 300,
+    height: 300,
+    opacity: 0.12, // Transparente!
+    zIndex: 100,
   },
 });

@@ -1,6 +1,7 @@
 import React from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const OptionsButton = ({
   onPress,
@@ -32,13 +33,16 @@ const OptionsButton = ({
         color={iconColor}
         style={styles.leftIcon}
       />
+    ) : logout && iconName ? (
+      <MaterialIcons
+        name={iconName}
+        size={iconSize}
+        color={iconColor}
+        style={styles.leftIcon}
+      />
     ) : null}
 
-    <Text
-      style={[styles.text, logout && { textAlign: "center", width: "100%" }]}
-    >
-      {title}
-    </Text>
+    <Text style={styles.text}>{title}</Text>
   </TouchableOpacity>
 );
 
@@ -50,7 +54,7 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingVertical: 16,
     paddingHorizontal: 16,
-    borderRadius: 10,
+    borderRadius: 1000,
   },
   leftIcon: {
     marginRight: 12,
