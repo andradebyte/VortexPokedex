@@ -12,15 +12,15 @@ const BigCard = ({ onPress }) => {
       style={({ pressed }) => [
         styles.card,
         pressed &&
-        Platform.OS !== "android" && {
-          opacity: 0.7,
-          transform: [{ scale: 0.98 }],
-        },
+          Platform.OS !== "android" && {
+            opacity: 0.7,
+            transform: [{ scale: 0.98 }],
+          },
       ]}
     >
       <Image
         source={require("../../assets/pokedexcard.png")}
-        style={{ width: "100%", height: "100%", borderRadius: 10 }}
+        style={{ width: "100%", height: "100%", borderRadius: 25 }}
         resizeMode="cover"
       />
     </Pressable>

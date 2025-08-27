@@ -34,11 +34,16 @@ export default function HomeScreen() {
             style={{
               flexDirection: "row",
               flexWrap: "wrap",
-              gap: 10,
+              justifyContent: "space-between",
               alignItems: "center",
               marginBottom: 10,
             }}
           >
+            <SmallCard
+              long={true}
+              text="Estatísticas IA"
+              image={require("../assets/images/estatisticas.png")}
+            />
             <SmallCard
               text="Camera"
               onPress={() => {

@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 
-const SmallCard = ({ text, onPress, image }) => {
+const SmallCard = ({ text, onPress, image, size = 90, long = false }) => {
   return (
     <Pressable
       onPress={onPress || (() => console.log("SmallCard pressionado!"))}
@@ -23,21 +23,21 @@ const SmallCard = ({ text, onPress, image }) => {
             opacity: 0.7,
             transform: [{ scale: 0.98 }],
           },
+        { width: size, height: size },
+        long && { width: size * 2 },
       ]}
     >
-      {image && (
+      {/* {image && (
         <Image source={image} style={styles.image} resizeMode="cover" />
-      )}
+      )} */}
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    height: 180,
     backgroundColor: "gray",
-    borderRadius: 10,
-    width: "48%",
+    borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden",
