@@ -4,6 +4,8 @@ import HomeScreen from "../screens/Homescreen";
 import InfoScreen from "../screens/Pokedex/Info";
 import CameraScreen from "../screens/Camera/CameraScreen";
 import ImageSendingScreen from "../screens/Camera/ImageSendingScreen";
+import LandingPage from "../screens/Auth/LandingPage";
+
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigation() {
@@ -15,7 +17,7 @@ export default function AppNavigation() {
         contentStyle: { backgroundColor: "#eaeaea" },
       }}
     >
-      {/* <Stack.Screen name="LandingPage" component={LandingPage} /> */}
+      <Stack.Screen name="LandingPage" component={LandingPage} />
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="PokedexScreen" component={PokedexScreen} />
       <Stack.Screen name="InfoScreen" component={InfoScreen} />

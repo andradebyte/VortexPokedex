@@ -7,6 +7,7 @@ import ProfileModal from "../components/Perfil/ProfileModal";
 import BigCard from "../components/Home/BigCard";
 import SmallCard from "../components/Home/SmallCard";
 import List from "../components/Lists/List";
+import Title from "../components/Title";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -61,6 +62,15 @@ export default function HomeScreen() {
               image={require("../assets/images/cards/cameracard.png")}
             />
           </View>
+          <Title
+            title="Todos os Pokémons"
+            style={{
+              fontSize: 20,
+              paddingLeft: 10,
+              paddingBottom: 10,
+              paddingTop: 10,
+            }}
+          />
           <List />
         </View>
       </ScrollView>
