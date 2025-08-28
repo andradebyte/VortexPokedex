@@ -63,7 +63,7 @@ export default function HomeScreen() {
             />
           </View>
           <Title
-            title="Todos os Pokémons"
+            title="Conquistas"
             style={{
               fontSize: 20,
               paddingLeft: 10,
@@ -75,6 +75,9 @@ export default function HomeScreen() {
         </View>
       </ScrollView>
       <ProfileModal
+        onPress={() => {
+          navigation.navigate("LandingPage");
+        }}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
       />
