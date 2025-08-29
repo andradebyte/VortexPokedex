@@ -22,5 +22,5 @@ export async function logarUsuario(email, senha) {
   }
 }
 
-const data = await logarUsuario("joao@example.com", "senha123");
-console.log(data);
+// const data = await logarUsuario("joao@example.com", "senha123");
+// console.log(data);

@@ -14,8 +14,14 @@ import { Feather } from "@expo/vector-icons";
 import Button from "../../components/Button";
 import { ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+// importa os usuários do contexto
+import { useUser } from "../../context/userContext.js";
+// importa a função de cadastro
+import { logarUsuario } from "../../requests/user/login.js";
+import { cadastrarUsuario } from "../../requests/user/cadastro.js";
 
 export default function LandingPage() {
+  const { saveUser } = useUser();
   const navigation = useNavigation();
 
   const [tab, setTab] = useState("Entrar");
@@ -25,22 +31,31 @@ export default function LandingPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setLoading(true);
-    // Simulate a login request
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      // console.log("Meu email:", email, "Minha senha:", password);
+      const data = await logarUsuario(email, password);
+      console.log(data);
+      await saveUser(data);
       navigation.navigate("HomeScreen");
-    }, 2000);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     setLoading(true);
-    // Simulate a registration request
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const data = await cadastrarUsuario(nome, email, password);
+      console.log(data);
+      await saveUser(data);
       navigation.navigate("HomeScreen");
-    }, 2000);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
   };
 
   return (
@@ -243,7 +258,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   tabActive: {
-    backgroundColor: "#fff",
+    backgroundColor: "#C52540",
   },
   tabText: {
     fontSize: 16,
@@ -251,7 +266,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   tabTextActive: {
-    color: "#191B38",
+    color: "#ffff",
     fontWeight: "bold",
   },
   inputBox: {

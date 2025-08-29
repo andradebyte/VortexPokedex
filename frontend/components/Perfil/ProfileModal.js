@@ -10,6 +10,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ProfilePhoto from "../Perfil/ProfilePhoto";
 import OptionsButton from "./OptionsButton";
+import { useUser } from "../../context/userContext";
 
 const ProfileModal = ({
   modalVisible,
@@ -19,6 +20,18 @@ const ProfileModal = ({
 }) => {
   const insets = useSafeAreaInsets();
   const topSpace = topOffset + insets.top;
+
+  const { logout, user } = useUser();
+
+  const [nome, setNome] = React.useState(user ? user.user.name : "Meu Nome");
+  const [email, setEmail] = React.useState(
+    user ? user.user.email : "meuemail@gmail.com"
+  );
+
+  const handleLogout = () => {
+    logout();
+    setModalVisible(false);
+  };
 
   return (
     <Modal
@@ -49,15 +62,13 @@ const ProfileModal = ({
           >
             <ProfilePhoto size={120} />
             <View style={{ marginBottom: 30 }} />
-            <OptionsButton title={"Andradinho"} iconName="at" />
-            <OptionsButton
-              title={"Joaoigor@gmail.com".toLowerCase()}
-              iconName="mail"
-            />
+            <OptionsButton title={nome} iconName="at" />
+            <OptionsButton title={email.toLowerCase()} iconName="mail" />
             <OptionsButton title={"******"} iconName={"lock-closed"} />
             <OptionsButton
               onPress={() => {
                 onPress();
+                handleLogout();
                 setModalVisible(false);
               }}
               iconName={"catching-pokemon"}

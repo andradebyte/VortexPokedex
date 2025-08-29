@@ -1,4 +1,3 @@
-// nome, email, senha
 import { api } from "../api.js";
 
 export async function cadastrarUsuario(nome, email, senha) {
@@ -22,6 +21,3 @@ export async function cadastrarUsuario(nome, email, senha) {
     throw error;
   }
 }
-
-const data = await cadastrarUsuario("João", "joao@example.com", "senha123");
-console.log(data);
