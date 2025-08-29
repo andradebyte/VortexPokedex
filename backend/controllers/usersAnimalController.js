@@ -17,22 +17,19 @@ export const createUserAnimal = async (req, res) => {
     const userAnimal = new UsersAnimalModal({ user, animal: animal._id });
     await userAnimal.save();
     await userAnimal.populate("animal");
-
-    console.log(animal);
-    res.status(201).json(animal);
+    res.status(201).json(userAnimal);
   } catch (error) {
     console.error("createUserAnimal error:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
 
-//Todos os animais por usuário
 export const getUserAnimalsByUserId = async (req, res) => {
   try {
     const userId = req.params.id;
-    const userAnimals = await UsersAnimalModal.find({ user: userId }).populate(
-      "animal"
-    );
+    const userAnimals = await UsersAnimalModal.find({
+      user: userId,
+    }).populate("animal");
     res.json(userAnimals);
   } catch (error) {
     console.error("getUserAnimalsByUserId error:", error);

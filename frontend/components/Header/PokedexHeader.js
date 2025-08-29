@@ -5,7 +5,7 @@ import Title from "../Title";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 
-const DashBoardHeader = ({ title }) => {
+const PokedexHeader = ({ title }) => {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   return (
@@ -33,4 +33,4 @@ const DashBoardHeader = ({ title }) => {
   );
 };
 
-export default DashBoardHeader;
+export default PokedexHeader;

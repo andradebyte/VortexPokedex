@@ -4,7 +4,6 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import TypeCard from "../../components/Info/TypeCard";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import Animal from "../../objdata/Animal";
 import Title from "../../components/Title";
 
 export default function InfoScreen() {
@@ -16,6 +15,11 @@ export default function InfoScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.headerBackground}>
+        <Image
+          source={require("../../assets/images/icons/pokeball.png")}
+          style={styles.pokeballBackground}
+        />
+
         <TouchableOpacity onPress={navigation.goBack} style={styles.backButton}>
           <Ionicons name="chevron-back" size={24} color="white" />
         </TouchableOpacity>
@@ -23,7 +27,6 @@ export default function InfoScreen() {
         <Image source={item.imageSource} style={styles.image} />
       </View>
 
-      {/* Parte branca para as informações */}
       <View style={{ paddingTop: 60 }} />
       <View style={styles.infoSection}>
         <View
@@ -72,10 +75,10 @@ const styles = StyleSheet.create({
 
   headerBackground: {
     width: "100%",
-    backgroundColor: "gray",
+    backgroundColor: "#C52540",
     height: 220,
-    borderBottomLeftRadius: 200,
-    borderBottomRightRadius: 200,
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50,
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
@@ -125,5 +128,15 @@ const styles = StyleSheet.create({
   },
   mytitle: {
     fontSize: 20,
+  },
+  pokeballBackground: {
+    position: "absolute",
+    top: 10,
+    left: "50%",
+    transform: [{ translateX: -100 }],
+    width: 200,
+    height: 200,
+    opacity: 0.12, // Transparente!
+    zIndex: 0,
   },
 });

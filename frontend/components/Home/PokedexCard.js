@@ -8,10 +8,10 @@ import {
   Image,
 } from "react-native";
 
-const DashboardCard = ({ text, onPress, myColor, imageSource, subText }) => {
+const PokedexCard = ({ text, onPress, myColor, imageSource, subText }) => {
   return (
     <Pressable
-      onPress={onPress || (() => console.log("DashboardCard pressionado!"))}
+      onPress={onPress || (() => console.log("PokedexCard pressionado!"))}
       android_ripple={Platform.select({
         android: { color: "#b3b3b3" },
         default: undefined,
@@ -38,8 +38,7 @@ const DashboardCard = ({ text, onPress, myColor, imageSource, subText }) => {
 const styles = StyleSheet.create({
   card: {
     height: 180,
-    elevation: 0.5,
-    borderRadius: 10,
+    borderRadius: 50,
     width: 180,
     justifyContent: "center",
     alignItems: "center",
@@ -64,4 +63,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DashboardCard;
+export default PokedexCard;

@@ -7,6 +7,7 @@ import ProfileModal from "../components/Perfil/ProfileModal";
 import BigCard from "../components/Home/BigCard";
 import SmallCard from "../components/Home/SmallCard";
 import List from "../components/Lists/List";
+import Title from "../components/Title";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -28,33 +29,55 @@ export default function HomeScreen() {
       >
         <Header title={"Pókedex"} onPress={() => handleModalVisible()} />
         <View style={{ paddingHorizontal: 10, marginTop: 10 }}>
-          <BigCard onPress={() => navigation.navigate("DashBoardScreen")} />
-          <View style={{ marginBottom: 10 }} />
+          <BigCard onPress={() => navigation.navigate("PokedexScreen")} />
+          <View style={{ marginBottom: 20 }} />
           <View
             style={{
               flexDirection: "row",
               flexWrap: "wrap",
-              gap: 10,
+              justifyContent: "space-between",
               alignItems: "center",
               marginBottom: 10,
             }}
           >
             <SmallCard
-              text="Camera"
+              long={true}
+              text="Descubra mais"
+              image={require("../assets/images/cards/websitecard.png")}
+              textStyle={{
+                width: "100%",
+                textAlign: "right",
+                paddingRight: 20,
+              }}
+            />
+            <SmallCard
+              text="IA"
+              image={require("../assets/images/cards/aicard.png")}
+            />
+            <SmallCard
+              text="Câmera"
               onPress={() => {
                 navigation.navigate("CameraScreen");
               }}
-              image={require("../assets/images/camera.png")}
-            />
-            <SmallCard
-              text="Estatísticas IA"
-              image={require("../assets/images/estatisticas.png")}
+              image={require("../assets/images/cards/cameracard.png")}
             />
           </View>
+          <Title
+            title="Conquistas"
+            style={{
+              fontSize: 20,
+              paddingLeft: 10,
+              paddingBottom: 10,
+              paddingTop: 10,
+            }}
+          />
           <List />
         </View>
       </ScrollView>
       <ProfileModal
+        onPress={() => {
+          navigation.navigate("LandingPage");
+        }}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
       />

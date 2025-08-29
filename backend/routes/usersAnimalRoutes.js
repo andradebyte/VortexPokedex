@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { createUserAnimal, getUserAnimalsByUserId } from "../controllers/usersAnimalController.js";
+import {
+  createUserAnimal,
+  getUserAnimalsByUserId,
+} from "../controllers/usersAnimalController.js";
 import { auth } from "../middlewares/auth.js";
 
 const router = Router();

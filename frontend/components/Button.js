@@ -3,7 +3,7 @@ import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const ButtonImgSend = ({
+const Button = ({
   onPress,
   title = "Oi",
   background = "#1976d2",
@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
 });
-export default ButtonImgSend;
+export default Button;

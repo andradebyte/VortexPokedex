@@ -11,7 +11,12 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ProfilePhoto from "../Perfil/ProfilePhoto";
 import OptionsButton from "./OptionsButton";
 
-const ProfileModal = ({ modalVisible, setModalVisible, topOffset = 0 }) => {
+const ProfileModal = ({
+  modalVisible,
+  setModalVisible,
+  topOffset = 0,
+  onPress,
+}) => {
   const insets = useSafeAreaInsets();
   const topSpace = topOffset + insets.top;
 
@@ -51,9 +56,14 @@ const ProfileModal = ({ modalVisible, setModalVisible, topOffset = 0 }) => {
             />
             <OptionsButton title={"******"} iconName={"lock-closed"} />
             <OptionsButton
+              onPress={() => {
+                onPress();
+                setModalVisible(false);
+              }}
+              iconName={"catching-pokemon"}
               background="#D63D3D"
               title="Sair da conta"
-              style={{ position: "absolute", bottom: 20 }}
+              style={{ position: "absolute", bottom: 20, width: 200 }}
               logout={true}
             />
           </View>
@@ -63,7 +73,7 @@ const ProfileModal = ({ modalVisible, setModalVisible, topOffset = 0 }) => {
   );
 };
 
-const RADIUS = 20;
+const RADIUS = 40;
 
 const styles = StyleSheet.create({
   backdrop: {
