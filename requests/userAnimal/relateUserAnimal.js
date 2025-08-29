@@ -1,32 +1,41 @@
 import { api } from "../api.js";
 
-export async function relateUserAnimal(userID, token, animalId) {
+async function relateUserAnimal(user, animalid, token) {
   try {
-    const response = await fetch(`${api}/usersAnimal/create`, {
+    const response = await fetch(`${api}/usersanimals/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ user: userID, animalId }),
+      body: JSON.stringify({
+        user: user,
+        animalid: animalid,
+      }),
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || "Erro ao reconhecer animal");
-    }
     const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || data.error || "Erro desconhecido");
+    }
+
     return data;
   } catch (error) {
-    console.error("Erro ao reconhecer animal:", error);
+    console.error("Erro na requisição:", error.message);
     throw error;
   }
 }
 
-const data = await relateUserAnimal(
-  "68b094425468f43d8a7d1a65",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGIwOTQ0MjU0NjhmNDNkOGE3ZDFhNjUiLCJlbWFpbCI6ImpvYW9AZXhhbXBsZS5jb20iLCJub21lIjoiSm_Do28iLCJpYXQiOjE3NTY0MDM5MDYsImV4cCI6MTc1NzAwODcwNn0.0SdDZgLmRjX9KkQ2a9BH6ppYu5UCw9fiKXre_tvHYj8",
-  "cat"
-);
+const userId = "68b094425468f43d8a7d1a65";
+const animalId = "peacock";
+const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGFlMTZlMWE5ODI2MGE2NTlmZGRlMWYiLCJlbWFpbCI6ImppZ29yOTQzM0BnbWFpbC5jb20iLCJub21lIjoiYW5kcmFkaW5obyIsImlhdCI6MTc1NjIzOTU4NSwiZXhwIjoxNzU2ODQ0Mzg1fQ.RqFPr_mOGpnKqDbg0NeQQEn1r4m9YXhZ-rAfOYCY5-w";
 
-console.log(data);
+relateUserAnimal(userId, animalId, token)
+  .then((data) => {
+    console.log("Relacionamento criado/sucesso:", data);
+  })
+  .catch((error) => {
+    console.error("Erro ao relacionar:", error.message);
+  });
