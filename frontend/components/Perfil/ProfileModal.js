@@ -23,7 +23,7 @@ const ProfileModal = ({
 
   const { logout, user } = useUser();
 
-  const [nome, setNome] = React.useState(user ? user.user.name : "Meu Nome");
+  const [nome, setNome] = React.useState(user ? user.user.nome : "Meu Nome");
   const [email, setEmail] = React.useState(
     user ? user.user.email : "meuemail@gmail.com"
   );
@@ -31,6 +31,8 @@ const ProfileModal = ({
   const handleLogout = () => {
     logout();
     setModalVisible(false);
+    setEmail("");
+    setNome("");
   };
 
   return (
