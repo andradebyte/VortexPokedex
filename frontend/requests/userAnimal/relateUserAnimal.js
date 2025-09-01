@@ -1,6 +1,6 @@
 import { api } from "../api.js";
 
-export async function relateUserAnimal(user, animalid, token) {
+export default async function relateUserAnimal(user, animalid, token) {
   try {
     const response = await fetch(`${api}/usersanimals/create`, {
       method: "POST",

@@ -20,10 +20,10 @@ const PokedexCard = ({ text, onPress, myColor, imageSource, subText }) => {
         styles.card,
         myColor && { backgroundColor: myColor },
         pressed &&
-          Platform.OS !== "android" && {
-            opacity: 0.7,
-            transform: [{ scale: 0.98 }],
-          },
+        Platform.OS !== "android" && {
+          opacity: 0.7,
+          transform: [{ scale: 0.98 }],
+        },
       ]}
     >
       {imageSource && (
@@ -37,9 +37,9 @@ const PokedexCard = ({ text, onPress, myColor, imageSource, subText }) => {
 
 const styles = StyleSheet.create({
   card: {
-    height: 180,
-    borderRadius: 50,
-    width: 180,
+    height: 160,
+    borderRadius: 60,
+    width: 160,
     justifyContent: "center",
     alignItems: "center",
     padding: 10,
@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   image: {
-    width: 110,
-    height: 110,
+    width: 80,
+    height: 80,
     marginBottom: 8,
   },
   text: {

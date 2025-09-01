@@ -11,7 +11,7 @@ import enviarFoto from "../../requests/enviarFoto/enviarFoto";
 
 const ImageSendingScreen = ({ route }) => {
   const { imageUri } = route.params || {};
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const { user } = useUser();
   const [loading, setLoading] = React.useState(false);
 
@@ -19,9 +19,10 @@ const ImageSendingScreen = ({ route }) => {
 
   const handleRelateUserAnimal = async () => {
     try {
-      const data = await relateUserAnimal(user.id, animalId, user.token);
+      console.log(user.user.id, animalId, user.token);
+      const data = await relateUserAnimal(user.user.id, animalId, user.token);
       console.log("Relacionamento criado/sucesso:", data);
-      navigation.navigate("InfoScreen");
+      // navigation.navigate("InfoScreen");
     } catch (error) {
       console.error("Erro ao relacionar:", error.message);
     }
@@ -42,8 +43,6 @@ const ImageSendingScreen = ({ route }) => {
       const data = await enviarFoto(payload, user.token);
       console.log("Imagem enviada com sucesso:", data);
       setAnimalId(data.fastapi_response.label);
-      console.log(animalId);
-      // navigation.navigate("InfoScreen", { item: data });
     } catch (error) {
       console.error("Erro ao enviar imagem:", error.message);
     } finally {
@@ -126,7 +125,10 @@ const ImageSendingScreen = ({ route }) => {
       </View>
       <Text style={{ fontSize: 18 }}>Deseja escanear essa imagem?</Text>
       <ButtonImgSend
-        onPress={enviarImagem}
+        onPress={async () => {
+          await enviarImagem();
+          if (!!animalId && animalId != "") await handleRelateUserAnimal();
+        }}
         iconName={"catching-pokemon"}
         background="#C52540"
         title="Enviar"
