@@ -6,14 +6,17 @@ import PokedexCard from "../components/Home/PokedexCard";
 import { useNavigation } from "@react-navigation/native";
 import { useUser } from "../context/userContext";
 import getUserAnimalsByUserId from "../requests/userAnimal/getUserAnimalsByUserId";
+import TYPE_COLORS from "../constants/TYPE_COLORS";
+import ANIMAL_IMAGES from "../constants/ANIMAL_IMAGES";
 
+let imagePath = "../assets/images/animals";
 
 const INITIAL_DATA = [
   {
     id: 0,
     name: "???",
-    animal_id: 'cat',
-    imageSource: require("../assets/images/animals/cat.png"),
+    animal_id: "cat",
+    imageSource: require(imagePath + "/cat-black.png"),
     descricao: "???",
     habitat: "???",
     tipo: [{ text: "???", bg: "gray", simbolo: "" }],
@@ -21,8 +24,8 @@ const INITIAL_DATA = [
   {
     id: 1,
     name: "???",
-    animal_id: 'cow',
-    imageSource: require("../assets/images/animals/cow.png"),
+    animal_id: "cow",
+    imageSource: require(imagePath + "/cow-black.png"),
     descricao: "???",
     habitat: "???",
     tipo: [{ text: "???", bg: "gray", simbolo: "" }],
@@ -30,8 +33,8 @@ const INITIAL_DATA = [
   {
     id: 2,
     name: "???",
-    animal_id: 'goat',
-    imageSource: require("../assets/images/animals/goat.png"),
+    animal_id: "goat",
+    imageSource: require(imagePath + "/goat-black.png"),
     descricao: "???",
     habitat: "???",
     tipo: [{ text: "???", bg: "gray", simbolo: "" }],
@@ -39,8 +42,8 @@ const INITIAL_DATA = [
   {
     id: 3,
     name: "???",
-    animal_id: 'horse',
-    imageSource: require("../assets/images/animals/horse.png"),
+    animal_id: "horse",
+    imageSource: require(imagePath + "/horse-black.png"),
     descricao: "???",
     habitat: "???",
     tipo: [{ text: "???", bg: "gray", simbolo: "" }],
@@ -48,8 +51,8 @@ const INITIAL_DATA = [
   {
     id: 4,
     name: "???",
-    animal_id: 'iguana',
-    imageSource: require("../assets/images/animals/iguana.png"),
+    animal_id: "iguana",
+    imageSource: require(imagePath + "/iguana-black.png"),
     descricao: "???",
     habitat: "???",
     tipo: [{ text: "???", bg: "gray", simbolo: "" }],
@@ -57,8 +60,8 @@ const INITIAL_DATA = [
   {
     id: 5,
     name: "???",
-    animal_id: 'lizard',
-    imageSource: require("../assets/images/animals/lizard.png"),
+    animal_id: "lizard",
+    imageSource: require(imagePath + "/lizard-black.png"),
     descricao: "???",
     habitat: "???",
     tipo: [{ text: "???", bg: "gray", simbolo: "" }],
@@ -66,8 +69,8 @@ const INITIAL_DATA = [
   {
     id: 6,
     name: "???",
-    animal_id: 'ostrich',
-    imageSource: require("../assets/images/animals/ostrich.png"),
+    animal_id: "ostrich",
+    imageSource: require(imagePath + "/ostrich-black.png"),
     descricao: "???",
     habitat: "???",
     tipo: [{ text: "???", bg: "gray", simbolo: "" }],
@@ -75,8 +78,8 @@ const INITIAL_DATA = [
   {
     id: 7,
     name: "???",
-    animal_id: 'peacock',
-    imageSource: require("../assets/images/animals/peacock.png"),
+    animal_id: "peacock",
+    imageSource: require(imagePath + "/peacock-black.png"),
     descricao: "???",
     habitat: "???",
     tipo: [{ text: "???", bg: "gray", simbolo: "" }],
@@ -84,8 +87,8 @@ const INITIAL_DATA = [
   {
     id: 8,
     name: "???",
-    animal_id: 'pigeon',
-    imageSource: require("../assets/images/animals/pigeon.png"),
+    animal_id: "pigeon",
+    imageSource: require(imagePath + "/pigeon-black.png"),
     descricao: "???",
     habitat: "???",
     tipo: [{ text: "???", bg: "gray", simbolo: "" }],
@@ -93,13 +96,21 @@ const INITIAL_DATA = [
   {
     id: 9,
     name: "???",
-    animal_id: 'possum',
-    imageSource: require("../assets/images/animals/possum.png"),
+    animal_id: "possum",
+    imageSource: require(imagePath + "/possum-black.png"),
     descricao: "???",
     habitat: "???",
     tipo: [{ text: "???", bg: "gray", simbolo: "" }],
   },
 ];
+
+function normalizeType(type) {
+  return type
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "_")
+    .toLowerCase();
+}
 
 export default function PokedexScreen() {
   const [cards, setCards] = useState(INITIAL_DATA);
@@ -113,42 +124,49 @@ export default function PokedexScreen() {
         const userId = user.user.id;
         const userAnimals = await getUserAnimalsByUserId(userId, user.token);
 
-        if (!!userAnimals || userAnimals.length > 0) {
-          // const updatedCards = INITIAL_DATA.map(card => {
-          //   const userAnimal = userAnimals.find(animal => animal.id === card.id);
-          //   return userAnimal ? { ...card, ...userAnimal } : card;
-          // });
-          // setCards(updatedCards);
-          INITIAL_DATA.map((elemento) => {
-            console.log("---")
-            if (userAnimals.find(animal => animal.animal.animal_id === elemento.animal_id)) {
-              console.log(elemento.animal_id);
-              elemento.name = animal.animal.nome;
-              elemento.descricao = animal.animal.descricao;
-              elemento.habitat = animal.animal.habitat;
-              elemento.tipo = animal.animal.tipo;
-
-              //               id: 0,
-              // name: "???",
-              // animal_id: 'cat',
-              // imageSource: require("../assets/images/animals/cat.png"),
-              // descricao: "???",
-              // habitat: "???",
-              // tipo: [{ text: "???", bg: "gray", simbolo: "" }],
-
-
+        if (userAnimals && userAnimals.length > 0) {
+          const updatedCards = INITIAL_DATA.map((card) => {
+            const found = userAnimals.find(
+              (animal) => animal.animal.animal_id === card.animal_id
+            );
+            let name = "???";
+            let descricao = "???";
+            let habitat = "???";
+            let tipo = [{ text: "???", bg: "gray", simbolo: "" }];
+            if (found) {
+              name = found.animal.nome;
+              descricao = found.animal.description;
+              habitat = found.animal.habitat;
+              tipo = found.animal.types.map((t) => {
+                const normType = normalizeType(t);
+                return (
+                  TYPE_COLORS[normType] || { text: t, bg: "gray", simbolo: "" }
+                );
+              });
             }
-          })
-        }
+            // Decide imagem
+            const shouldShowColor = name && name !== "???";
+            const imageKey = shouldShowColor
+              ? card.animal_id
+              : `${card.animal_id}-black`;
 
-        // console.log(INITIAL_DATA);
+            return {
+              ...card,
+              name,
+              descricao,
+              habitat,
+              tipo,
+              imageSource: ANIMAL_IMAGES[imageKey],
+            };
+          });
+          setCards(updatedCards);
+        }
       } catch (error) {
         console.error("Failed to fetch user animals:", error);
       }
     }
     fetchUserAnimals();
   }, []);
-
 
   return (
     <ScrollView

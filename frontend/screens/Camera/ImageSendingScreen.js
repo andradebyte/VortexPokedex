@@ -5,7 +5,7 @@ import { useRoute } from "@react-navigation/native";
 import ButtonImgSend from "../../components/ImageSending/ButtonImgSend";
 import relateUserAnimal from "../../requests/userAnimal/relateUserAnimal";
 import { useNavigation } from "@react-navigation/native";
-import { useUser } from "../../context/userContext"
+import { useUser } from "../../context/userContext";
 import { ActivityIndicator } from "react-native";
 import enviarFoto from "../../requests/enviarFoto/enviarFoto";
 
@@ -22,11 +22,11 @@ const ImageSendingScreen = ({ route }) => {
       console.log(user.user.id, animalId, user.token);
       const data = await relateUserAnimal(user.user.id, animalId, user.token);
       console.log("Relacionamento criado/sucesso:", data);
-      // navigation.navigate("InfoScreen");
+      // navigation.navigate("InfoScreen", {item: });
     } catch (error) {
       console.error("Erro ao relacionar:", error.message);
     }
-  }
+  };
 
   // ImageSendingScreen
   const enviarImagem = async () => {
@@ -50,10 +50,8 @@ const ImageSendingScreen = ({ route }) => {
     }
   };
 
-
   return (
     <View style={styles.container}>
-
       {loading && (
         <View
           style={{

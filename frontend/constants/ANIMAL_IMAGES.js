@@ -1,0 +1,23 @@
+const ANIMAL_IMAGES = {
+  cat: require("../assets/images/animals/cat.png"),
+  "cat-black": require("../assets/images/animals/cat-black.png"),
+  cow: require("../assets/images/animals/cow.png"),
+  "cow-black": require("../assets/images/animals/cow-black.png"),
+  goat: require("../assets/images/animals/goat.png"),
+  "goat-black": require("../assets/images/animals/goat-black.png"),
+  horse: require("../assets/images/animals/horse.png"),
+  "horse-black": require("../assets/images/animals/horse-black.png"),
+  iguana: require("../assets/images/animals/iguana.png"),
+  "iguana-black": require("../assets/images/animals/iguana-black.png"),
+  lizard: require("../assets/images/animals/lizard.png"),
+  "lizard-black": require("../assets/images/animals/lizard-black.png"),
+  ostrich: require("../assets/images/animals/ostrich.png"),
+  "ostrich-black": require("../assets/images/animals/ostrich-black.png"),
+  peacock: require("../assets/images/animals/peacock.png"),
+  "peacock-black": require("../assets/images/animals/peacock-black.png"),
+  pigeon: require("../assets/images/animals/pigeon.png"),
+  "pigeon-black": require("../assets/images/animals/pigeon-black.png"),
+  possum: require("../assets/images/animals/possum.png"),
+  "possum-black": require("../assets/images/animals/possum-black.png"),
+};
+export default ANIMAL_IMAGES;

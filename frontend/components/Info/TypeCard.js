@@ -18,10 +18,10 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: "row",
     height: 40,
-    width: 100,
     marginRight: 5,
     justifyContent: "center",
     alignItems: "center",
+    paddingHorizontal: 15,
   },
   textStyle: {
     color: "white",

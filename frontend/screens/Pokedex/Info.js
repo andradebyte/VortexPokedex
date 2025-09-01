@@ -1,5 +1,12 @@
 import React from "react";
-import { TouchableOpacity, StyleSheet, Text, View, Image } from "react-native";
+import {
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+} from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import TypeCard from "../../components/Info/TypeCard";
@@ -27,7 +34,9 @@ export default function InfoScreen() {
         <Image source={item.imageSource} style={styles.image} />
       </View>
 
-      <View style={{ paddingTop: 60 }} />
+      {/* Remova ou reduza este View para evitar espaço extra */}
+      {/* <View style={{ paddingTop: 60 }} /> */}
+
       <View style={styles.infoSection}>
         <View
           style={{
@@ -46,7 +55,12 @@ export default function InfoScreen() {
           </TouchableOpacity>
         </View>
 
-        <View style={{ flexDirection: "row", marginVertical: 10 }}>
+        <ScrollView
+          style={{ flexDirection: "row", marginVertical: 10, maxHeight: 50 }}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ alignItems: "center" }}
+        >
           {item.tipo.map((type, index) => (
             <TypeCard
               key={index}
@@ -55,11 +69,11 @@ export default function InfoScreen() {
               myColor={item.tipo[index].bg}
             />
           ))}
-        </View>
+        </ScrollView>
         <Title title={"Descrição"} style={styles.mytitle} />
-        <Text style={styles.desc}>{item.namedesc || "??"}</Text>
+        <Text style={styles.desc}>{item.descricao || "??"}</Text>
         <Title title={"Habitat"} style={styles.mytitle} />
-        <Text style={styles.desc}>{item.namehabitat || "??"}</Text>
+        <Text style={styles.desc}>{item.habitat || "??"}</Text>
       </View>
     </View>
   );
