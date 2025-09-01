@@ -3,12 +3,78 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import CommonHeader from "../../components/CommonHeader";
 import { useRoute } from "@react-navigation/native";
 import ButtonImgSend from "../../components/ImageSending/ButtonImgSend";
+import relateUserAnimal from "../../requests/userAnimal/relateUserAnimal";
+import { useNavigation } from "@react-navigation/native";
+import { useUser } from "../../context/userContext"
+import { ActivityIndicator } from "react-native";
+import enviarFoto from "../../requests/enviarFoto/enviarFoto";
 
 const ImageSendingScreen = ({ route }) => {
   const { imageUri } = route.params || {};
+  // const navigation = useNavigation();
+  const { user } = useUser();
+  const [loading, setLoading] = React.useState(false);
+
+  const [animalId, setAnimalId] = React.useState("");
+
+  const handleRelateUserAnimal = async () => {
+    try {
+      console.log(user.user.id, animalId, user.token);
+      const data = await relateUserAnimal(user.user.id, animalId, user.token);
+      console.log("Relacionamento criado/sucesso:", data);
+      // navigation.navigate("InfoScreen");
+    } catch (error) {
+      console.error("Erro ao relacionar:", error.message);
+    }
+  }
+
+  // ImageSendingScreen
+  const enviarImagem = async () => {
+    if (loading) return;
+    setLoading(true);
+
+    try {
+      setLoading(true);
+      const payload = {
+        uri: imageUri,
+        type: "image/jpeg",
+        name: "foto.jpg",
+      };
+      const data = await enviarFoto(payload, user.token);
+      console.log("Imagem enviada com sucesso:", data);
+      setAnimalId(data.fastapi_response.label);
+    } catch (error) {
+      console.error("Erro ao enviar imagem:", error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   return (
     <View style={styles.container}>
+
+      {loading && (
+        <View
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0,0,0,0.2)",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 999,
+          }}
+        >
+          <Text style={{ color: "#fff", fontSize: 18, marginBottom: 12 }}>
+            Carregando...
+          </Text>
+          <ActivityIndicator size="small" color="#fff" />
+        </View>
+      )}
+
       <CommonHeader
         title={"Pokédex"}
         textStyle={{ color: "white" }}
@@ -59,6 +125,10 @@ const ImageSendingScreen = ({ route }) => {
       </View>
       <Text style={{ fontSize: 18 }}>Deseja escanear essa imagem?</Text>
       <ButtonImgSend
+        onPress={async () => {
+          await enviarImagem();
+          if (!!animalId && animalId != "") await handleRelateUserAnimal();
+        }}
         iconName={"catching-pokemon"}
         background="#C52540"
         title="Enviar"
@@ -90,7 +160,7 @@ const styles = StyleSheet.create({
     transform: [{ translateX: -100 }, { rotate: "30deg" }],
     width: 300,
     height: 300,
-    opacity: 0.12, // Transparente!
+    opacity: 0.12,
     zIndex: 100,
   },
 });

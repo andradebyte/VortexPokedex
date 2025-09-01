@@ -5,7 +5,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 const Button = ({
   onPress,
-  title = "Oi",
+  title = "",
   background = "#1976d2",
   style,
   iconName,

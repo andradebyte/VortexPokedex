@@ -11,11 +11,18 @@ import {
   Platform,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
+
 import Button from "../../components/Button";
 import { ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+// importa os usuários do contexto
+import { useUser } from "../../context/userContext.js";
+// importa a função de cadastro
+import { logarUsuario } from "../../requests/user/login.js";
+import { cadastrarUsuario } from "../../requests/user/cadastro.js";
 
 export default function LandingPage() {
+  const { saveUser } = useUser();
   const navigation = useNavigation();
 
   const [tab, setTab] = useState("Entrar");
@@ -24,23 +31,37 @@ export default function LandingPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setLoading(true);
-    // Simulate a login request
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      // console.log("Meu email:", email, "Minha senha:", password);
+      const data = await logarUsuario(email, password);
+      console.log(data);
+      await saveUser(data);
+      setError("");
       navigation.navigate("HomeScreen");
-    }, 2000);
+    } catch (error) {
+      console.log(error);
+      setError("Erro ao fazer login");
+    }
+    setLoading(false);
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     setLoading(true);
-    // Simulate a registration request
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const data = await cadastrarUsuario(nome, email, password);
+      console.log(data);
+      await saveUser(data);
+      setError("");
       navigation.navigate("HomeScreen");
-    }, 2000);
+    } catch (error) {
+      console.log(error);
+      setError("Erro ao cadastrar usuário");
+    }
+    setLoading(false);
   };
 
   return (
@@ -66,12 +87,7 @@ export default function LandingPage() {
           <ActivityIndicator size="small" color="#fff" />
         </View>
       )}
-
-      {/* Rest of the UI */}
-      <StatusBar barStyle="light-content" />
-      {/* Fundo com grid e estrelas */}
       <View style={styles.bg}>
-        {/* Header */}
         <Image
           source={require("../../assets/images/icons/pokeball.png")}
           style={styles.pokeballBackground}
@@ -171,15 +187,16 @@ export default function LandingPage() {
             </TouchableOpacity>
           </View>
         </View>
+        <Text style={{ textAlign: 'center', color: 'red' }}>{error}</Text>
       </View>
       <Button
         iconName={"catching-pokemon"}
         background="#C52540"
         title="Enviar"
         style={{
-          position: "absolute",
+          position: "relative",
           alignSelf: "center",
-          bottom: "15%",
+          bottom: "30%",
           width: 200,
         }}
         logout={true}
@@ -243,7 +260,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   tabActive: {
-    backgroundColor: "#fff",
+    backgroundColor: "#C52540",
   },
   tabText: {
     fontSize: 16,
@@ -251,7 +268,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   tabTextActive: {
-    color: "#191B38",
+    color: "#ffff",
     fontWeight: "bold",
   },
   inputBox: {

@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     transform: [{ translateX: -100 }],
     width: 200,
     height: 200,
-    opacity: 0.12, // Transparente!
+    opacity: 0.12,
     zIndex: 0,
   },
 });

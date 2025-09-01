@@ -1,6 +1,5 @@
 
 from fastapi import FastAPI, File, UploadFile
-from pydantic import BaseModel
 from PIL import Image
 import io
 from app.classifier import classify_image
