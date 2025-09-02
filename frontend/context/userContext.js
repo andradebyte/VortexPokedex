@@ -45,5 +45,5 @@ export function UserProvider({ children }) {
 }
 
 export function useUser() {
-  return useContext(UserContext);
+  return useContext(UserContext) || { user: null, logout: () => {} };
 }

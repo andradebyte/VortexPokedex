@@ -1,34 +1,101 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import CommonHeader from "../../components/CommonHeader";
-import { useRoute } from "@react-navigation/native";
 import ButtonImgSend from "../../components/ImageSending/ButtonImgSend";
 import relateUserAnimal from "../../requests/userAnimal/relateUserAnimal";
 import { useNavigation } from "@react-navigation/native";
 import { useUser } from "../../context/userContext";
 import { ActivityIndicator } from "react-native";
 import enviarFoto from "../../requests/enviarFoto/enviarFoto";
+import INITIAL_DATA from "../../constants/INITIAL_DATA";
+import ANIMAL_IMAGES from "../../constants/ANIMAL_IMAGES";
+import TYPE_COLORS from "../../constants/TYPE_COLORS";
+import getAnimal from "../../requests/animal/getAnimal";
+import { Audio } from "expo-av";
+
+const playSound = async () => {
+  try {
+    const { sound } = await Audio.Sound.createAsync(
+      require("../../assets/audio/capturesoundeff.mp3")
+    );
+    await sound.playAsync();
+    sound.setOnPlaybackStatusUpdate((status) => {
+      if (status.didJustFinish) {
+        sound.unloadAsync();
+      }
+    });
+  } catch (error) {
+    console.log("Erro ao tocar som:", error);
+  }
+};
+
+function normalizeType(type) {
+  return type
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function getUpdatedAnimalCard(card, animalFromApi) {
+  return {
+    ...card,
+    name: animalFromApi.nome,
+    descricao: animalFromApi.description,
+    habitat: animalFromApi.habitat,
+    tipo: animalFromApi.types.map((t) => {
+      const normType = normalizeType(t);
+      return TYPE_COLORS[normType] || { text: t, bg: "gray", simbolo: "" };
+    }),
+    imageSource:
+      ANIMAL_IMAGES[card.animal_id] ||
+      require("../../assets/images/animals/none.png"),
+  };
+}
 
 const ImageSendingScreen = ({ route }) => {
   const { imageUri } = route.params || {};
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   const { user } = useUser();
   const [loading, setLoading] = React.useState(false);
-
   const [animalId, setAnimalId] = React.useState("");
 
-  const handleRelateUserAnimal = async () => {
+  useEffect(() => {
+    if (!!animalId && animalId !== "") {
+      handleRelateUserAnimal();
+    }
+  }, [animalId]);
+
+  const handleGetAnimal = async (showConfetti = false) => {
     try {
-      console.log(user.user.id, animalId, user.token);
-      const data = await relateUserAnimal(user.user.id, animalId, user.token);
-      console.log("Relacionamento criado/sucesso:", data);
-      // navigation.navigate("InfoScreen", {item: });
+      if (!animalId) return;
+      const data = await getAnimal(animalId, user.token);
+      console.log("Animal obtido:", data);
+      const card = INITIAL_DATA.find((card) => card.animal_id === animalId);
+      const updatedCard = getUpdatedAnimalCard(card, data);
+      navigation.navigate("InfoScreen", {
+        item: updatedCard,
+        onPress: () => navigation.pop(3),
+        showConfetti,
+      });
     } catch (error) {
-      console.error("Erro ao relacionar:", error.message);
+      console.error("Erro ao buscar animal:", error.message);
     }
   };
 
-  // ImageSendingScreen
+  const handleRelateUserAnimal = async () => {
+    try {
+      await relateUserAnimal(user.user.id, animalId, user.token);
+      await playSound();
+      await handleGetAnimal(true);
+    } catch (error) {
+      if (error.message && error.message.includes("Relação já existe")) {
+        await handleGetAnimal(false);
+      } else {
+        console.error("Erro ao relacionar:", error.message);
+      }
+    }
+  };
+
   const enviarImagem = async () => {
     if (loading) return;
     setLoading(true);

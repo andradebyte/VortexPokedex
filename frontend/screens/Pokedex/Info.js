@@ -12,30 +12,52 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import TypeCard from "../../components/Info/TypeCard";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Title from "../../components/Title";
+import ConfettiCannon from "react-native-confetti-cannon";
 
 export default function InfoScreen() {
   const navigation = useNavigation();
 
   const route = useRoute();
-  const { item } = route.params;
+  const { item, onPress, showConfetti } = route.params;
 
   return (
     <View style={styles.container}>
+      {showConfetti && (
+        <View
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 3000,
+          }}
+        >
+          <ConfettiCannon
+            count={120}
+            origin={{ x: 180, y: 0 }}
+            fadeOut
+            autoStart
+            explosionSpeed={350}
+            fallSpeed={2600}
+          />
+        </View>
+      )}
       <View style={styles.headerBackground}>
         <Image
           source={require("../../assets/images/icons/pokeball.png")}
           style={styles.pokeballBackground}
         />
 
-        <TouchableOpacity onPress={navigation.goBack} style={styles.backButton}>
+        <TouchableOpacity
+          onPress={onPress || navigation.goBack}
+          style={styles.backButton}
+        >
           <Ionicons name="chevron-back" size={24} color="white" />
         </TouchableOpacity>
 
         <Image source={item.imageSource} style={styles.image} />
       </View>
-
-      {/* Remova ou reduza este View para evitar espaço extra */}
-      {/* <View style={{ paddingTop: 60 }} /> */}
 
       <View style={styles.infoSection}>
         <View

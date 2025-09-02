@@ -8,101 +8,7 @@ import { useUser } from "../context/userContext";
 import getUserAnimalsByUserId from "../requests/userAnimal/getUserAnimalsByUserId";
 import TYPE_COLORS from "../constants/TYPE_COLORS";
 import ANIMAL_IMAGES from "../constants/ANIMAL_IMAGES";
-
-let imagePath = "../assets/images/animals";
-
-const INITIAL_DATA = [
-  {
-    id: 0,
-    name: "???",
-    animal_id: "cat",
-    imageSource: require(imagePath + "/cat-black.png"),
-    descricao: "???",
-    habitat: "???",
-    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
-  },
-  {
-    id: 1,
-    name: "???",
-    animal_id: "cow",
-    imageSource: require(imagePath + "/cow-black.png"),
-    descricao: "???",
-    habitat: "???",
-    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
-  },
-  {
-    id: 2,
-    name: "???",
-    animal_id: "goat",
-    imageSource: require(imagePath + "/goat-black.png"),
-    descricao: "???",
-    habitat: "???",
-    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
-  },
-  {
-    id: 3,
-    name: "???",
-    animal_id: "horse",
-    imageSource: require(imagePath + "/horse-black.png"),
-    descricao: "???",
-    habitat: "???",
-    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
-  },
-  {
-    id: 4,
-    name: "???",
-    animal_id: "iguana",
-    imageSource: require(imagePath + "/iguana-black.png"),
-    descricao: "???",
-    habitat: "???",
-    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
-  },
-  {
-    id: 5,
-    name: "???",
-    animal_id: "lizard",
-    imageSource: require(imagePath + "/lizard-black.png"),
-    descricao: "???",
-    habitat: "???",
-    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
-  },
-  {
-    id: 6,
-    name: "???",
-    animal_id: "ostrich",
-    imageSource: require(imagePath + "/ostrich-black.png"),
-    descricao: "???",
-    habitat: "???",
-    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
-  },
-  {
-    id: 7,
-    name: "???",
-    animal_id: "peacock",
-    imageSource: require(imagePath + "/peacock-black.png"),
-    descricao: "???",
-    habitat: "???",
-    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
-  },
-  {
-    id: 8,
-    name: "???",
-    animal_id: "pigeon",
-    imageSource: require(imagePath + "/pigeon-black.png"),
-    descricao: "???",
-    habitat: "???",
-    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
-  },
-  {
-    id: 9,
-    name: "???",
-    animal_id: "possum",
-    imageSource: require(imagePath + "/possum-black.png"),
-    descricao: "???",
-    habitat: "???",
-    tipo: [{ text: "???", bg: "gray", simbolo: "" }],
-  },
-];
+import INITIAL_DATA from "../constants/INITIAL_DATA";
 
 function normalizeType(type) {
   return type
@@ -238,7 +144,7 @@ const styles = StyleSheet.create({
     transform: [{ translateX: -100 }, { rotate: "30deg" }],
     width: 300,
     height: 300,
-    opacity: 0.12, // Transparente!
+    opacity: 0.12,
     zIndex: 100,
   },
 });

@@ -36,7 +36,6 @@ export default function LandingPage() {
   const handleLogin = async () => {
     setLoading(true);
     try {
-      // console.log("Meu email:", email, "Minha senha:", password);
       const data = await logarUsuario(email, password);
       console.log(data);
       await saveUser(data);
@@ -98,9 +97,7 @@ export default function LandingPage() {
         </Text>
       </View>
 
-      {/* Card branco com abas */}
       <View style={styles.card}>
-        {/* Tabs */}
         <View style={styles.tabs}>
           <TouchableOpacity
             style={[styles.tab, tab === "Entrar" && styles.tabActive]}
@@ -187,7 +184,7 @@ export default function LandingPage() {
             </TouchableOpacity>
           </View>
         </View>
-        <Text style={{ textAlign: 'center', color: 'red' }}>{error}</Text>
+        <Text style={{ textAlign: "center", color: "red" }}>{error}</Text>
       </View>
       <Button
         iconName={"catching-pokemon"}

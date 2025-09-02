@@ -1,30 +1,11 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  Platform,
-  StyleSheet,
-  Image,
-} from "react-native";
+import { View, Text, Pressable, StyleSheet, Image } from "react-native";
 
 const PokedexCard = ({ text, onPress, myColor, imageSource, subText }) => {
   return (
     <Pressable
       onPress={onPress || (() => console.log("PokedexCard pressionado!"))}
-      android_ripple={Platform.select({
-        android: { color: "#b3b3b3" },
-        default: undefined,
-      })}
-      style={({ pressed }) => [
-        styles.card,
-        myColor && { backgroundColor: myColor },
-        pressed &&
-        Platform.OS !== "android" && {
-          opacity: 0.7,
-          transform: [{ scale: 0.98 }],
-        },
-      ]}
+      style={[styles.card, myColor && { backgroundColor: myColor }]}
     >
       {imageSource && (
         <Image source={imageSource} style={styles.image} resizeMode="contain" />

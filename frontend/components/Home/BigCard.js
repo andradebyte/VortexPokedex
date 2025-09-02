@@ -40,13 +40,13 @@ const styles = StyleSheet.create({
   },
   text: {
     position: "absolute",
-    bottom: 10,
+    bottom: 20,
     color: "#fff",
     fontWeight: "bold",
     fontSize: 23,
     textAlign: "right",
     width: "100%",
-    paddingRight: 10,
+    paddingRight: 20,
     zIndex: 1,
   },
 });

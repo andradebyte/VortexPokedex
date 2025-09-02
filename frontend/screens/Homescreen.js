@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { StatusBar } from "expo-status-bar";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import Header from "../components/Header";
 import { useNavigation } from "@react-navigation/native";
@@ -43,16 +42,12 @@ export default function HomeScreen() {
             <SmallCard
               long={true}
               text="Descubra mais"
-              image={require("../assets/images/cards/websitecard.png")}
+              image={require("../assets/images/cards/descubramais1.png")}
               textStyle={{
                 width: "100%",
                 textAlign: "right",
                 paddingRight: 20,
               }}
-            />
-            <SmallCard
-              text="IA"
-              image={require("../assets/images/cards/aicard.png")}
             />
             <SmallCard
               text="Câmera"
