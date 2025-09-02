@@ -9,6 +9,6 @@ import { auth } from "../middlewares/auth.js";
 const router = Router();
 
 router.get("/:id", auth, getAnimalById);
-router.post("/create", createAnimal);
+router.post("/", createAnimal);
 
 export default router;

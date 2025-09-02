@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   StatusBar,
   Platform,
+  ScrollView,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
@@ -24,7 +25,9 @@ import { cadastrarUsuario } from "../../requests/user/cadastro.js";
 export default function LandingPage() {
   const { saveUser } = useUser();
   const navigation = useNavigation();
+  const scrollViewRef = useRef(null);
 
+  const [onblueStyle, setOnBlueStyle] = useState(false);
   const [tab, setTab] = useState("Entrar");
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -32,6 +35,24 @@ export default function LandingPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const handleFocus = (y = 180) => {
+    setTimeout(() => {
+      if (scrollViewRef.current) {
+        scrollViewRef.current.scrollTo({ y, animated: true });
+      }
+    }, 100); // Um pequeno delay ajuda a garantir que o teclado já abriu
+  };
+
+  const handleBlur = () => {
+    setOnBlueStyle(false);
+    setTimeout(() => {
+      if (scrollViewRef.current) {
+        // Volta para o topo, ou o valor que quiser
+        scrollViewRef.current.scrollTo({ y: 0, animated: true });
+      }
+    }, 100);
+  };
 
   const handleLogin = async () => {
     setLoading(true);
@@ -65,140 +86,155 @@ export default function LandingPage() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      {/* Loading Indicator */}
-      {loading && (
-        <View
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: "rgba(0,0,0,0.2)",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 999,
-          }}
-        >
-          <Text style={{ color: "#fff", fontSize: 18, marginBottom: 12 }}>
-            Carregando...
-          </Text>
-          <ActivityIndicator size="small" color="#fff" />
-        </View>
-      )}
-      <View style={styles.bg}>
-        <Image
-          source={require("../../assets/images/icons/pokeball.png")}
-          style={styles.pokeballBackground}
-        />
-        <Text style={styles.header}>Pronto para explorar?</Text>
-        <Text style={styles.subheader}>
-          É rapidinho! Faça login ou crie uma conta e aproveite.
-        </Text>
-      </View>
-
-      <View style={styles.card}>
-        <View style={styles.tabs}>
-          <TouchableOpacity
-            style={[styles.tab, tab === "Entrar" && styles.tabActive]}
-            onPress={() => {
-              setTab("Entrar");
-              setNome("");
-              setEmail("");
-              setPassword("");
+      <ScrollView
+        ref={scrollViewRef}
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
+        {loading && (
+          <View
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: "rgba(0,0,0,0.2)",
+              justifyContent: "center",
+              alignItems: "center",
+              zIndex: 999,
             }}
           >
-            <Text
-              style={[styles.tabText, tab === "Entrar" && styles.tabTextActive]}
-            >
-              Entrar
+            <Text style={{ color: "#fff", fontSize: 18, marginBottom: 12 }}>
+              Carregando...
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.tab, tab === "Cadastro" && styles.tabActive]}
-            onPress={() => {
-              setTab("Cadastro");
-              setNome("");
-              setEmail("");
-              setPassword("");
-            }}
-          >
-            <Text
-              style={[
-                styles.tabText,
-                tab === "Cadastro" && styles.tabTextActive,
-              ]}
-            >
-              Cadastro
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        {tab === "Cadastro" ? (
-          <View style={styles.inputBox}>
-            <Text style={styles.inputLabel}>Nome de usuário</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="usuario"
-              placeholderTextColor="#B0B3C7"
-              autoCapitalize="none"
-              value={nome}
-              onChangeText={setNome}
-            />
+            <ActivityIndicator size="small" color="#fff" />
           </View>
-        ) : null}
-
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Email</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="meuemail@gmail.com"
-            placeholderTextColor="#B0B3C7"
-            autoCapitalize="none"
-            keyboardType="email-address"
-            value={email}
-            onChangeText={setEmail}
+        )}
+        <View style={styles.bg}>
+          <Image
+            source={require("../../assets/images/icons/pokeball.png")}
+            style={styles.pokeballBackground}
           />
+          <Text style={styles.header}>Pronto para explorar?</Text>
+          <Text style={styles.subheader}>
+            É rapidinho! Faça login ou crie uma conta e aproveite.
+          </Text>
         </View>
-        {/* Password */}
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Senha</Text>
-          <View style={styles.passwordBox}>
-            <TextInput
-              style={[styles.input, { flex: 1, marginBottom: 0 }]}
-              placeholder="********"
-              placeholderTextColor="#B0B3C7"
-              secureTextEntry={!showPassword}
-              value={password}
-              onChangeText={setPassword}
-            />
+
+        <View style={styles.card}>
+          <View style={styles.tabs}>
             <TouchableOpacity
-              onPress={() => setShowPassword((s) => !s)}
-              style={{ paddingHorizontal: 8 }}
+              style={[styles.tab, tab === "Entrar" && styles.tabActive]}
+              onPress={() => {
+                setTab("Entrar");
+                setNome("");
+                setEmail("");
+                setPassword("");
+              }}
             >
-              <Feather
-                name={showPassword ? "eye" : "eye-off"}
-                size={20}
-                color="#B0B3C7"
-              />
+              <Text
+                style={[
+                  styles.tabText,
+                  tab === "Entrar" && styles.tabTextActive,
+                ]}
+              >
+                Entrar
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.tab, tab === "Cadastro" && styles.tabActive]}
+              onPress={() => {
+                setTab("Cadastro");
+                setNome("");
+                setEmail("");
+                setPassword("");
+              }}
+            >
+              <Text
+                style={[
+                  styles.tabText,
+                  tab === "Cadastro" && styles.tabTextActive,
+                ]}
+              >
+                Cadastro
+              </Text>
             </TouchableOpacity>
           </View>
+
+          {tab === "Cadastro" ? (
+            <View style={styles.inputBox}>
+              <Text style={styles.inputLabel}>Nome de usuário</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="usuario"
+                placeholderTextColor="#B0B3C7"
+                autoCapitalize="none"
+                value={nome}
+                onChangeText={setNome}
+              />
+            </View>
+          ) : null}
+
+          <View style={styles.inputBox}>
+            <Text style={styles.inputLabel}>Email</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="meuemail@gmail.com"
+              placeholderTextColor="#B0B3C7"
+              autoCapitalize="none"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
+            />
+          </View>
+          <View style={styles.inputBox}>
+            <Text style={styles.inputLabel}>Senha</Text>
+            <View style={[styles.passwordBox]}>
+              <TextInput
+                onFocus={() => {
+                  setOnBlueStyle(true);
+                  handleFocus(150);
+                }}
+                onBlur={() => {
+                  handleBlur();
+                }}
+                style={[styles.input, { flex: 1, marginBottom: 0 }]}
+                placeholder="********"
+                placeholderTextColor="#B0B3C7"
+                secureTextEntry={!showPassword}
+                value={password}
+                onChangeText={setPassword}
+              />
+              <TouchableOpacity
+                onPress={() => setShowPassword((s) => !s)}
+                style={{ paddingHorizontal: 8 }}
+              >
+                <Feather
+                  name={showPassword ? "eye" : "eye-off"}
+                  size={20}
+                  color="#B0B3C7"
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <Text style={{ textAlign: "center", color: "red" }}>{error}</Text>
+          {onblueStyle && <View style={{ paddingBottom: 30 }} />}
         </View>
-        <Text style={{ textAlign: "center", color: "red" }}>{error}</Text>
-      </View>
-      <Button
-        iconName={"catching-pokemon"}
-        background="#C52540"
-        title="Enviar"
-        style={{
-          position: "relative",
-          alignSelf: "center",
-          bottom: "30%",
-          width: 200,
-        }}
-        logout={true}
-        onPress={tab === "Entrar" ? handleLogin : handleRegister}
-      />
+        <Button
+          iconName={"catching-pokemon"}
+          background="#C52540"
+          title="Enviar"
+          style={{
+            position: "relative",
+            alignSelf: "center",
+            bottom: "30%",
+            width: 200,
+          }}
+          logout={true}
+          onPress={tab === "Entrar" ? handleLogin : handleRegister}
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 }
