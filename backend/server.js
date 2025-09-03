@@ -35,7 +35,7 @@ app.post("/api/upload", upload.single("file"), async (req, res) => {
   form.append("file", req.file.buffer, req.file.originalname);
 
   try {
-    const response = await fetch("http://172.18.9.78:8000/upload-image", {
+    const response = await fetch("http://microsservico:8000/upload-image", {
       method: "POST",
       body: form,
       headers: form.getHeaders(),
