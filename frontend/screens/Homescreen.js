@@ -33,10 +33,10 @@ export default function HomeScreen() {
           <View
             style={{
               flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
+              justifyContent: "center",
               alignItems: "center",
               marginBottom: 10,
+              gap: 10,
             }}
           >
             <SmallCard

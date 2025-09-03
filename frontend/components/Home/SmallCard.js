@@ -31,7 +31,7 @@ const SmallCard = ({
             transform: [{ scale: 0.98 }],
           },
         { width: size, height: size + 5 },
-        long && { width: size * 3 },
+        long && { width: size * 2.78 },
       ]}
     >
       {image && (

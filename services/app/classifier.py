@@ -48,7 +48,7 @@ def classify_image(image_file):
 
     confidence_label = f"{conf.item()*100:.1f}%"
 
-    if conf.item()*100 < 50:
+    if conf.item()*100 < 60:
         label = "undefined"
         confidence_label = "N/A"
     return label, confidence_label

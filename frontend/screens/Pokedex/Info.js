@@ -18,13 +18,14 @@ export default function InfoScreen() {
   const navigation = useNavigation();
 
   const route = useRoute();
-  const { item, onPress, showConfetti } = route.params;
+  const { item, showConfetti } = route.params;
 
   return (
     <View style={styles.container}>
       {showConfetti && (
         <View
           style={{
+            pointerEvents: "none",
             position: "absolute",
             top: 0,
             left: 0,
@@ -49,10 +50,7 @@ export default function InfoScreen() {
           style={styles.pokeballBackground}
         />
 
-        <TouchableOpacity
-          onPress={onPress || navigation.goBack}
-          style={styles.backButton}
-        >
+        <TouchableOpacity onPress={navigation.goBack} style={styles.backButton}>
           <Ionicons name="chevron-back" size={24} color="white" />
         </TouchableOpacity>
 
@@ -72,13 +70,16 @@ export default function InfoScreen() {
           <TouchableOpacity
             onPress={() => console.log("Falando...")}
             style={styles.audioButton}
-          >
-            <AntDesign name="sound" size={24} color="black" />
-          </TouchableOpacity>
+          ></TouchableOpacity>
         </View>
 
         <ScrollView
-          style={{ flexDirection: "row", marginVertical: 10, maxHeight: 50 }}
+          style={{
+            flexDirection: "row",
+            marginVertical: 10,
+            maxHeight: 50,
+            flexGrow: 1,
+          }}
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ alignItems: "center" }}
@@ -92,6 +93,7 @@ export default function InfoScreen() {
             />
           ))}
         </ScrollView>
+
         <Title title={"Descrição"} style={styles.mytitle} />
         <Text style={styles.desc}>{item.descricao || "??"}</Text>
         <Title title={"Habitat"} style={styles.mytitle} />
@@ -158,7 +160,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   desc: {
-    fontSize: 18,
+    fontSize: 16,
     color: "#444",
     marginBottom: 20,
   },

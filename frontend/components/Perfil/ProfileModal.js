@@ -11,6 +11,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ProfilePhoto from "../Perfil/ProfilePhoto";
 import OptionsButton from "./OptionsButton";
 import { useUser } from "../../context/userContext";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 const ProfileModal = ({
   modalVisible,
@@ -50,10 +51,14 @@ const ProfileModal = ({
       <View style={[styles.sheetContainer, { paddingTop: topSpace + 40 }]}>
         <View style={styles.sheet}>
           <Pressable
-            style={[styles.button, styles.buttonClose]}
+            style={[
+              styles.button,
+              styles.buttonClose,
+              { flexDirection: "row", alignSelf: "flex-end" },
+            ]}
             onPress={() => setModalVisible(false)}
           >
-            <Text style={styles.textStyle}>Close</Text>
+            <AntDesign name="close" size={24} color="black" />
           </Pressable>
           <View
             style={{
@@ -66,7 +71,6 @@ const ProfileModal = ({
             <View style={{ marginBottom: 30 }} />
             <OptionsButton title={nome} iconName="at" />
             <OptionsButton title={email.toLowerCase()} iconName="mail" />
-            <OptionsButton title={"******"} iconName={"lock-closed"} />
             <OptionsButton
               onPress={() => {
                 onPress();
@@ -114,7 +118,6 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   buttonClose: {},
-  textStyle: { color: "#2196F3", fontWeight: "bold", fontSize: 16 },
 });
 
 export default ProfileModal;

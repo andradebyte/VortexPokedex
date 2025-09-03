@@ -61,7 +61,7 @@ export default function LandingPage() {
       console.log(data);
       await saveUser(data);
       setError("");
-      navigation.navigate("HomeScreen");
+      navigation.replace("HomeScreen");
     } catch (error) {
       console.log(error);
       setError("Erro ao fazer login");

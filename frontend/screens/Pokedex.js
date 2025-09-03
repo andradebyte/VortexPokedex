@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
     paddingBottom: 60,
   },
   grid: {
+    zIndex: 1000,
     justifyContent: "center",
     alignSelf: "stretch",
     flexDirection: "row",

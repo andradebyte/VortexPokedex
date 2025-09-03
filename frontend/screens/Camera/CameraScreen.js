@@ -66,7 +66,7 @@ export default function CameraScreen() {
 
       if (!result.canceled && result.assets && result.assets[0]?.uri) {
         const uri = result.assets[0].uri;
-        navigation.navigate("ImageSendingScreen", { imageUri: uri });
+        navigation.replace("ImageSendingScreen", { imageUri: uri });
       }
     } catch (e) {
       console.warn("Erro ao abrir galeria:", e);

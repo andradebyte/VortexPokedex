@@ -1,26 +1,24 @@
 import React from "react";
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const OptionsButton = ({
-  onPress,
   title = "",
-  background = "#1976d2",
+  background = "#2595C4",
   style,
   iconName,
   iconColor = "#fff",
   iconSize = 22,
   logout = false,
 }) => (
-  <TouchableOpacity
+  <View
     style={[
       styles.button,
       { backgroundColor: background },
       logout && { justifyContent: "center" },
       style,
     ]}
-    onPress={onPress}
     activeOpacity={0.8}
     accessibilityRole="button"
     accessibilityLabel={title}
@@ -43,7 +41,7 @@ const OptionsButton = ({
     ) : null}
 
     <Text style={styles.text}>{title}</Text>
-  </TouchableOpacity>
+  </View>
 );
 
 const styles = StyleSheet.create({

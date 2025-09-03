@@ -58,6 +58,7 @@ const ImageSendingScreen = ({ route }) => {
   const { user } = useUser();
   const [loading, setLoading] = React.useState(false);
   const [animalId, setAnimalId] = React.useState("");
+  const [error, setError] = React.useState(null);
 
   useEffect(() => {
     if (!!animalId && animalId !== "") {
@@ -72,9 +73,8 @@ const ImageSendingScreen = ({ route }) => {
       console.log("Animal obtido:", data);
       const card = INITIAL_DATA.find((card) => card.animal_id === animalId);
       const updatedCard = getUpdatedAnimalCard(card, data);
-      navigation.navigate("InfoScreen", {
+      navigation.replace("InfoScreen", {
         item: updatedCard,
-        onPress: () => navigation.pop(3),
         showConfetti,
       });
     } catch (error) {
@@ -84,6 +84,7 @@ const ImageSendingScreen = ({ route }) => {
 
   const handleRelateUserAnimal = async () => {
     try {
+      setError(null);
       await relateUserAnimal(user.user.id, animalId, user.token);
       await playSound();
       await handleGetAnimal(true);
@@ -91,6 +92,7 @@ const ImageSendingScreen = ({ route }) => {
       if (error.message && error.message.includes("Relação já existe")) {
         await handleGetAnimal(false);
       } else {
+        setError(error.message || "Erro ao reconhecer animal.");
         console.error("Erro ao relacionar:", error.message);
       }
     }
@@ -189,6 +191,9 @@ const ImageSendingScreen = ({ route }) => {
         )}
       </View>
       <Text style={{ fontSize: 18 }}>Deseja escanear essa imagem?</Text>
+      <Text style={{ textAlign: "center", color: "red", marginTop: 15 }}>
+        {error}
+      </Text>
       <ButtonImgSend
         onPress={async () => {
           await enviarImagem();
