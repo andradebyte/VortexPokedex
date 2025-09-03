@@ -20,7 +20,6 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, "model", "best_resnet.pth")
 checkpoint = torch.load(MODEL_PATH, map_location=device)
 
-# checkpoint = torch.load("../../services/model/best_resnet.pth", map_location=device)
 model.load_state_dict(checkpoint)
 
 model.eval()
@@ -46,4 +45,10 @@ def classify_image(image_file):
 
     label = idx2label[idx.item()]
     print(f"Pred: {label}  |  Confiança: {conf.item()*100:.1f}%")
-    return label, conf.item()*100
+
+    confidence_label = f"{conf.item()*100:.1f}%"
+
+    if conf.item()*100 < 50:
+        label = "undefined"
+        confidence_label = "N/A"
+    return label, confidence_label
