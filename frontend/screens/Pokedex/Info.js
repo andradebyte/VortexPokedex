@@ -61,16 +61,12 @@ export default function InfoScreen() {
         <View
           style={{
             flexDirection: "row",
-            alignItems: "center",
+            alignItems: "flex-start",
             gap: 10,
             width: "100%",
           }}
         >
           <Text style={styles.name}>{item.name || "???"}</Text>
-          <TouchableOpacity
-            onPress={() => console.log("Falando...")}
-            style={styles.audioButton}
-          ></TouchableOpacity>
         </View>
 
         <ScrollView
