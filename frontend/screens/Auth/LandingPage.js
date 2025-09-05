@@ -231,7 +231,6 @@ export default function LandingPage() {
             bottom: "30%",
             width: 200,
           }}
-          logout={true}
           onPress={tab === "Entrar" ? handleLogin : handleRegister}
         />
       </ScrollView>

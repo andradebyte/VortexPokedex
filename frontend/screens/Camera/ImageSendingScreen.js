@@ -203,7 +203,6 @@ const ImageSendingScreen = ({ route }) => {
         background="#C52540"
         title="Enviar"
         style={{ position: "absolute", bottom: "15%", width: 200 }}
-        logout={true}
       />
     </View>
   );

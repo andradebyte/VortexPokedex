@@ -71,7 +71,7 @@ export default function HomeScreen() {
       </ScrollView>
       <ProfileModal
         onPress={() => {
-          navigation.navigate("LandingPage");
+          navigation.replace("LandingPage");
         }}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}

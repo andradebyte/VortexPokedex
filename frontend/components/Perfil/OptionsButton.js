@@ -11,8 +11,10 @@ const OptionsButton = ({
   iconColor = "#fff",
   iconSize = 22,
   logout = false,
+  onPress,
 }) => (
-  <View
+  <TouchableOpacity
+    onPress={onPress}
     style={[
       styles.button,
       { backgroundColor: background },
@@ -41,7 +43,7 @@ const OptionsButton = ({
     ) : null}
 
     <Text style={styles.text}>{title}</Text>
-  </View>
+  </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
